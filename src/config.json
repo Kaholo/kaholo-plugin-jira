@@ -1,0 +1,55 @@
+{
+    "name": "jira",
+    "type": "executer",
+    "imgUrl": "jira.png",
+    "execProgram": "node",
+    "main": "app.js",
+    "version": "1.0.0",
+    "description": "",
+    "settings": [
+        {
+            "name": "HOST",
+            "viewName": "Host",
+            "type": "string"
+        },
+        {
+            "name": "EMAIL",
+            "viewName": "email",
+            "type": "string"
+        },
+        {
+            "name": "TOKEN",
+            "viewName": "token",
+            "type": "string"
+        }
+    ],
+    "methods": [
+        {
+            "name": "searchJira",
+            "viewName": "Search Jira",
+            "params": [
+                {
+                    "name": "HOST",
+                    "viewName": "Host",
+                    "type": "string"
+                },
+                {
+                    "name": "EMAIL",
+                    "viewName": "email",
+                    "type": "string"
+                },
+                {
+                    "name": "TOKEN",
+                    "viewName": "token",
+                    "type": "string"
+                },
+                {
+                    "name": "JQL",
+                    "viewName": "JQL",
+                    "type": "string",
+                    "required": true
+                }
+            ]
+        }
+    ]
+}
