@@ -20,7 +20,7 @@
         {
             "name": "TOKEN",
             "viewName": "token",
-            "type": "string"
+            "type": "vault"
         }
     ],
     "methods": [
@@ -41,13 +41,44 @@
                 {
                     "name": "TOKEN",
                     "viewName": "token",
-                    "type": "string"
+                    "type": "vault"
                 },
                 {
                     "name": "JQL",
                     "viewName": "JQL",
                     "type": "string",
                     "required": true
+                }
+            ]
+        },
+        {
+            "name": "UPDATE_ISSUE_STATUS",
+            "viewName": "Update Issue Status",
+            "params": [
+                {
+                    "name": "HOST",
+                    "viewName": "Host",
+                    "type": "string"
+                },
+                {
+                    "name": "EMAIL",
+                    "viewName": "email",
+                    "type": "string"
+                },
+                {
+                    "name": "TOKEN",
+                    "viewName": "token",
+                    "type": "vault"
+                },
+                {
+                    "name":"ISSUE_KEY",
+                    "viewName":"Issue key",
+                    "type":"string"
+                },
+                {
+                    "name" : "STATUS_ID",
+                    "viewName": "Status ID",
+                    "type": "string"
                 }
             ]
         }
