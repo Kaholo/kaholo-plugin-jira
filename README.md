@@ -20,13 +20,13 @@ Search Jira for all issues according the desiered JQL.
 3. Token - you need to create a token for the user (it is not Username Password connection). To learn how to create token read [here](https://confluence.atlassian.com/cloud/api-tokens-938839638.html)
 4. JQL - a string of the query.
 
-## Update Issue Status
+## Method: Update Issue Status
 This method will update the status of the issue
 
 **Parameters**
 
 The following parameters could be provided in the plugin setting.
-1. Host - from https://<your atlasian URL>
+1. Host - from https://your_atlasian_URL
 2. Email - user's email
 3. Token (from vault)
   
