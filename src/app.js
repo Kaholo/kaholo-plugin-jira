@@ -1,62 +1,65 @@
-//var JiraClient = require("jira-connector");
 const fetch = require('node-fetch');
-var JiraClient = require('jira-client');
-
-function connectJira(action,settings) {
-  // Initialize
-  const jHost = action.params.HOST || settings.HOST;
-  const jEmail = action.params.EMAIL || settings.EMAIL;
-  const jApiToken = action.params.TOKEN || settings.TOKEN;
-
-  var jira = new JiraClient({
-    host: jHost,
-    basic_auth: {
-      email: jEmail,
-      api_token: jApiToken
-    },
-    strictSSL: true // One of optional parameters
-  });
-  return jira
-}
 
 function updateIssueStatus(action, settings) {
+    /**
+     * Change the status of an issue.
+     */
     let jHost = action.params.HOST || settings.HOST;
     const jIssueKey = action.params.ISSUE_KEY;
     const jStatusID = action.params.STATUS_ID;
+    const method = "POST"
     jHost = `${jHost}/rest/api/3/issue/${jIssueKey}/transitions?expand=transitions.fields`;
     let bodyData = `{
       "transition": {
         "id":"${jStatusID}"            
       }
     }`
-    return genericRestAPI(action,settings,jHost, bodyData)
+    return genericRestAPI(action,settings,method, jHost, bodyData)
 }
 
-function searchJira(action, settings) {
-  return new Promise((resolve, reject) => {
-    const myJql = {
-      jql: action.JQL
-    }
+async function updateVersion (action, settings) {
+  /**
+   * Set status of version to released inside a given project.
+   */
+  const host= action.params.HOST || settings.HOST;
+  const projectId = action.params.PROJECT_ID;
+  const versionId = await getVersionId(action, settings, action.params.VERSION, projectId,host);
+  const jHost = `${host}/rest/api/3/version/${versionId}`
+  const intProjectId = parseInt(projectId);
+  const method = "PUT"
+  let bodyData = `{
+    "description": "closed by Kaholo automation",
+    "projectId":${intProjectId},
+    "released": true
+  }`
+  return await genericRestAPI(action,settings,method,jHost,bodyData)
+}
 
-    jira = connectJira(action,settings)
-    jira.search.search(myJql, (err, issues) => {
-      if (err)
-        return reject(err); 
-        console.log(issues)
-      return resolve(issues)
-    }
-    );
-  })
+async function searchJira(action, settings) {
+  /**
+   * Search Jira with a given JQL
+   */
+  const method = 'POST';
+  const host= action.params.HOST || settings.HOST;
+  const jHost = `${host}/rest/api/3/search`;
+  const jql = action.params.JQL;
+  let bodyData = `{
+    "jql":"${jql}"            
+  }`
+  return await genericRestAPI(action,settings, method, jHost, bodyData)
 }
 
 //////////// HELPERS ////////////
 
-function genericRestAPI(action, settings, host, bodyData) {
+async function genericRestAPI(action, settings, method, host, bodyData) {
+/**
+ * Send Default API Request
+ */
     const jEmail = action.params.EMAIL || settings.EMAIL;
     const jApiToken = action.params.TOKEN || settings.TOKEN;
 
-    return fetch(host,  {
-      method: 'POST',
+    const response = await fetch(host,  {
+      method: `${method}`,
       headers: {
       'Authorization': `Basic ${Buffer.from(
         `${jEmail}:${jApiToken}`
@@ -66,9 +69,33 @@ function genericRestAPI(action, settings, host, bodyData) {
       },
       body: bodyData
     })
+    return response.text();
+}
+
+async function getVersionId(action, settings, versionName, projectId, host) {
+  /**
+   * Input: 
+   * 1) Version name
+   * 2) Project ID
+   * 3) URL
+   * 
+   * return:
+   *   version ID
+   */
+  const method = "GET";
+  host = `${host}/rest/api/3/project/${projectId}/versions`;
+  let versions = await genericRestAPI(action,settings,method,host)
+  let versionArr = JSON.parse(versions)
+  for (i = 0; i < versionArr.length ; i++){ 
+    if (versionArr[i].name == versionName) {
+      return versionArr[i].id ;
+    }
+  }
+  throw "version not found"
 }
 
 module.exports = {
   searchJira: searchJira,
-  UPDATE_ISSUE_STATUS: updateIssueStatus
+  UPDATE_ISSUE_STATUS: updateIssueStatus,
+  UPDATE_VERSION: updateVersion
 }
