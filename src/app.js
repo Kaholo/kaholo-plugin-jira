@@ -9,11 +9,11 @@ function updateIssueStatus(action, settings) {
     const jStatusID = action.params.STATUS_ID;
     const method = "POST"
     jHost = `${jHost}/rest/api/3/issue/${jIssueKey}/transitions?expand=transitions.fields`;
-    let bodyData = `{
+    let bodyData = {
       "transition": {
-        "id":"${jStatusID}"            
+        id:jStatusID
       }
-    }`
+    }
     return genericRestAPI(action,settings,method, jHost, bodyData)
 }
 
@@ -46,7 +46,7 @@ async function searchJira(action, settings) {
   let bodyData = `{
     "jql":"${jql}"            
   }`
-  return await genericRestAPI(action,settings, method, jHost, bodyData)
+  return JSON.parse(await genericRestAPI(action,settings, method, jHost, bodyData))
 }
 
 //////////// HELPERS ////////////
