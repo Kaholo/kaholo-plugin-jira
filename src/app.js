@@ -27,11 +27,11 @@ async function updateVersion (action, settings) {
   const jHost = `${host}/rest/api/3/version/${versionId}`
   const intProjectId = parseInt(projectId);
   const method = "PUT"
-  let bodyData = `{
-    "description": "closed by Kaholo automation",
-    "projectId":${intProjectId},
-    "released": true
-  }`
+  let bodyData = {
+    description: "closed by Kaholo automation",
+    projectId:intProjectId,
+    released: true
+  }
   return await genericRestAPI(action,settings,method,jHost,bodyData)
 }
 
@@ -43,9 +43,9 @@ async function searchJira(action, settings) {
   const host= action.params.HOST || settings.HOST;
   const jHost = `${host}/rest/api/3/search`;
   const jql = action.params.JQL;
-  let bodyData = `{
-    "jql":"${jql}"            
-  }`
+  let bodyData = {
+    jql:jql            
+  }
   return JSON.parse(await genericRestAPI(action,settings, method, jHost, bodyData))
 }
 
@@ -67,7 +67,7 @@ async function genericRestAPI(action, settings, method, host, bodyData) {
          'Accept': 'application/json',
           'Content-Type': 'application/json'
       },
-      body: bodyData
+      body: JSON.stringify(bodyData)
     })
     return response.text();
 }
