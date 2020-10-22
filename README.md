@@ -32,3 +32,11 @@ The following parameters could be provided in the plugin setting.
   
 4. Issue ID
 5. Status ID - get the settings ID from: Project Settings -> Workflows -> press on actions.
+
+## Method: Update Version
+This method will change the version to released.
+1. Host - from https://your_atlasian_URL
+2. Email - user's email
+3. Token (from vault)
+4. Version ID - the version name
+5. Project ID Take it from the project URL. get only the project ID from the project setting and copy the URL (your_company.atlassian.net/secure/project/EditProject!default.jspa?pid=**your_ID**)
