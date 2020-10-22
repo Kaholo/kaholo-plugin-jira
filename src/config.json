@@ -4,7 +4,7 @@
     "imgUrl": "jira.png",
     "execProgram": "node",
     "main": "app.js",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "",
     "settings": [
         {
@@ -20,7 +20,7 @@
         {
             "name": "TOKEN",
             "viewName": "token",
-            "type": "string"
+            "type": "vault"
         }
     ],
     "methods": [
@@ -41,13 +41,75 @@
                 {
                     "name": "TOKEN",
                     "viewName": "token",
-                    "type": "string"
+                    "type": "vault"
                 },
                 {
                     "name": "JQL",
                     "viewName": "JQL",
                     "type": "string",
                     "required": true
+                }
+            ]
+        },
+        {
+            "name": "UPDATE_ISSUE_STATUS",
+            "viewName": "Update Issue Status",
+            "params": [
+                {
+                    "name": "HOST",
+                    "viewName": "Host",
+                    "type": "string"
+                },
+                {
+                    "name": "EMAIL",
+                    "viewName": "email",
+                    "type": "string"
+                },
+                {
+                    "name": "TOKEN",
+                    "viewName": "token",
+                    "type": "vault"
+                },
+                {
+                    "name":"ISSUE_KEY",
+                    "viewName":"Issue key",
+                    "type":"string"
+                },
+                {
+                    "name" : "STATUS_ID",
+                    "viewName": "Status ID",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name":"UPDATE_VERSION",
+            "viewName" : "update version",
+            "params": [
+                {
+                    "name": "EMAIL",
+                    "viewName": "email",
+                    "type": "string"
+                },
+                {
+                    "name": "TOKEN",
+                    "viewName": "token",
+                    "type": "vault"
+                },
+                {
+                    "name": "HOST",
+                    "viewName": "Host",
+                    "type": "string"
+                },
+                {
+                    "name": "VERSION",
+                    "viewName": "Version",
+                    "type": "string"
+                },
+                {
+                    "name": "PROJECT_ID",
+                    "viewName": "Project ID",
+                    "type":"string"
                 }
             ]
         }
