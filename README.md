@@ -1,42 +1,93 @@
 # kaholo-plugin-jira
-Kaholo Plugin for Jira. This plugin can search for issues using simple JQL language and return all the related issues.
+Kaholo plugin for integration with Jira API.
 
-**Settings**
+## Settings
+1. Host (String) **Optional** - The host name of your default atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+2. Email (String) **Optional** - The email of the default user to use for authentication.
+3. API Token (Vault) **Optional** - The API token of the default user to use for authentication.
 
-1. Host - the URL for your atlassian (ie. <company>.atlassian.net
-2. Email - the user's email for login and retrieve the parameters.
-3. Token - you need to create a token for the user (it is not Username Password connection). To learn how to create token read [here](https://confluence.atlassian.com/cloud/api-tokens-938839638.html)
+* **Please Notice** You have to provide all the above credntials either from the settings or for each method from it's parameters.
 
-## Method: searchJira
+## Method: List Issues
+List all issues that match the specified filters.
 
-**Description**
+### Parameters
+1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+2. Email (String) **Optional** - The email of the user to use for authentication.
+3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
+4. Project (Autocomplete) **Optional** - If specified, list issues only inside the specified project.
+5. Status (Autocomplete) **Optional** - If specified, list issues only with the specified status.
+6. Created After Date (Autocomplete) **Optional** - If specified, only list issues created after the specified date.
+7. Created Before Date (Autocomplete) **Optional** - If specified, only list issues created before the specified date.
+8. Override JQL (String) **Optional** - If specified, search issues according to the specified JQL(Jira Query Language) **instead of the values provided in parameters 4-7.**
+9. Fields (Text) **Optional** - If specified return only the specified fields. Can enter multiple values by seperating each with a new line, or as an array from code. Can enter **\*** to get all fields. Default fields returned are: created, description, summary, status, priority.
+10. Max Results (String) **Optional** - Maximum number of results to return. Defualt value is 50. Maximum value is 100. If provided value bigger than 100, will still return only 100 results.
+11. Results Offset (String) **Optional** -  If specified, return results from the specified offset index. Relevant mainly for paging. Default value is
 
-Search Jira for all issues according the desiered JQL.
+## Method: Transition Issue Status
+Transition the specified issue with the specified transition. Usually transitions match status names, and are made to change issue status.
 
-**Parameters**
+### Parameters
+1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+2. Email (String) **Optional** - The email of the user to use for authentication.
+3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
+4. Project (Autocomplete) **Optional** - If specified, see only issues from the specified project when selecting an issue from autocomplete in the next parameter.
+5. Issue (Autocomplete) **Required** - The issue to make the transition on.
+6. Transition (Autocomplete) **Required** - The transition to do on the issue. Usually matches status names.
 
-1. Host - the URL for your atlassian (ie. <company>.atlassian.net
-2. Email - the user's email for login and retrieve the parameters.
-3. Token - you need to create a token for the user (it is not Username Password connection). To learn how to create token read [here](https://confluence.atlassian.com/cloud/api-tokens-938839638.html)
-4. JQL - a string of the query.
+## Method: Create Project Version
+Create a new project version.
 
-## Method: Update Issue Status
-This method will update the status of the issue
+### Parameters
+1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+2. Email (String) **Optional** - The email of the user to use for authentication.
+3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
+4. Project (Autocomplete) **Required** - The project to create the version of.
+5. Version Name (String) **Required** - The name of the new version.
+6. Description (Text) **Optional** - The description of the new version.
+7. Start Date (Autocomplete) **Optional** - The start date of the new version.
+8. Release Date (Autocomplete) **Optional** - The release date of the version.
+9. Archived (Boolean) **Optional** - Indicates that the version is archived. 
 
-**Parameters**
+## Method: Update Project Version
+Update Project Version
 
-The following parameters could be provided in the plugin setting.
-1. Host - from https://your_atlasian_URL
-2. Email - user's email
-3. Token (from vault)
-  
-4. Issue ID
-5. Status ID - get the settings ID from: Project Settings -> Workflows -> press on actions.
+### Parameters
+1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+2. Email (String) **Optional** - The email of the user to use for authentication.
+3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
+4. Project (Autocomplete) **Required** - The project to update it's version.
+5. Version (String) **Required** - The version to update.
+6. Description (Text) **Optional** - If specified update the description of the version with the specified value.
+7. Start Date (Autocomplete) **Optional** - The start date of the new version. If specified update the start date of the version with the specified value.
+8. Release Date (Autocomplete) **Optional** - The release date of the version. If specified update the release date of the version with the specified value.
+9. Move Unfixed Issues URL (String) **Optional** - The URL of the self link to the version to which all unfixed issues are moved when a version is released. 
+10. Released (Boolean) **Optional** - If specified, release the specified version.
+11. Archived (Boolean) **Optional** - If specified, archive the specified version.
 
-## Method: Update Version
-This method will change the version to released.
-1. Host - from https://your_atlasian_URL
-2. Email - user's email
-3. Token (from vault)
-4. Version ID - the version name
-5. Project ID Take it from the project URL. get only the project ID from the project setting and copy the URL (your_company.atlassian.net/secure/project/EditProject!default.jspa?pid=**your_ID**)
+## Method: List Transitions
+List all transitions for the specified issue.
+
+### Parameters
+1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+2. Email (String) **Optional** - The email of the user to use for authentication.
+3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
+4. Project (Autocomplete) **Required** - The project of the issue.
+5. Issue (Autocomplete) **Required** - The issue to list it's transitions.
+
+## Method: List Projects
+List all projects in your account.
+
+### Parameters
+1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+2. Email (String) **Optional** - The email of the user to use for authentication.
+3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
+
+## Method: List Project Versions
+List all verions of the specified project.
+
+### Parameters
+1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+2. Email (String) **Optional** - The email of the user to use for authentication.
+3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
+4. Project (Autocomplete) **Required** - The project to list it's versions.

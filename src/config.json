@@ -4,112 +4,344 @@
     "imgUrl": "jira.png",
     "execProgram": "node",
     "main": "app.js",
-    "version": "1.0.1",
-    "description": "",
+    "version": "2.0.0",
+    "description": "Kaholo plugin for integration with Jira API",
     "settings": [
         {
-            "name": "HOST",
+            "name": "host",
             "viewName": "Host",
             "type": "string"
         },
         {
-            "name": "EMAIL",
-            "viewName": "email",
+            "name": "email",
+            "viewName": "Email",
             "type": "string"
         },
         {
-            "name": "TOKEN",
-            "viewName": "token",
+            "name": "apiToken",
+            "viewName": "API Token",
             "type": "vault"
         }
     ],
     "methods": [
         {
-            "name": "searchJira",
-            "viewName": "Search Jira",
+            "name": "listIssues",
+            "viewName": "List Issues",
             "params": [
                 {
-                    "name": "HOST",
+                    "name": "host",
                     "viewName": "Host",
                     "type": "string"
                 },
                 {
-                    "name": "EMAIL",
-                    "viewName": "email",
+                    "name": "email",
+                    "viewName": "Email",
                     "type": "string"
                 },
                 {
-                    "name": "TOKEN",
-                    "viewName": "token",
+                    "name": "apiToken",
+                    "viewName": "API Token",
                     "type": "vault"
                 },
                 {
-                    "name": "JQL",
-                    "viewName": "JQL",
-                    "type": "string",
-                    "required": true
+                    "name":"project",
+                    "viewName": "Project",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listProjectsAuto"
+                },
+                {
+                    "name":"status",
+                    "viewName": "Status",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listStatusAuto"
+                },
+                {
+                    "name":"startDate",
+                    "viewName": "Created After Date",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"getStartDate"
+                },
+                {
+                    "name":"endDate",
+                    "viewName": "Created Before Date",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"getEndDate"
+                },
+                {
+                    "name": "overrideJql",
+                    "viewName": "Override JQL",
+                    "type": "string"
+                },
+                {
+                    "name": "fields",
+                    "viewName": "Fields",
+                    "type": "text"
+                },
+                {
+                    "name": "maxResults",
+                    "viewName": "Max Results",
+                    "type": "string"
+                },
+                {
+                    "name": "startAt",
+                    "viewName": "Results Offset",
+                    "type": "string"
                 }
             ]
         },
         {
-            "name": "UPDATE_ISSUE_STATUS",
-            "viewName": "Update Issue Status",
+            "name": "transitionIssue",
+            "viewName": "Transition Issue Status",
             "params": [
                 {
-                    "name": "HOST",
+                    "name": "host",
                     "viewName": "Host",
                     "type": "string"
                 },
                 {
-                    "name": "EMAIL",
-                    "viewName": "email",
+                    "name": "email",
+                    "viewName": "Email",
                     "type": "string"
                 },
                 {
-                    "name": "TOKEN",
-                    "viewName": "token",
+                    "name": "apiToken",
+                    "viewName": "API Token",
                     "type": "vault"
                 },
                 {
-                    "name":"ISSUE_KEY",
-                    "viewName":"Issue key",
-                    "type":"string"
+                    "name":"project",
+                    "viewName": "Project",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listProjectsAuto"
                 },
                 {
-                    "name" : "STATUS_ID",
-                    "viewName": "Status ID",
-                    "type": "string"
+                    "name":"issue",
+                    "viewName": "Issue",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listIssuesAuto"
+                },
+                {
+                    "name":"transition",
+                    "viewName": "Transition",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listTransitionsAuto"
                 }
             ]
         },
         {
-            "name":"UPDATE_VERSION",
-            "viewName" : "update version",
+            "name":"createProjectVersion",
+            "viewName" : "Create Project Version",
             "params": [
                 {
-                    "name": "EMAIL",
-                    "viewName": "email",
-                    "type": "string"
-                },
-                {
-                    "name": "TOKEN",
-                    "viewName": "token",
-                    "type": "vault"
-                },
-                {
-                    "name": "HOST",
+                    "name": "host",
                     "viewName": "Host",
                     "type": "string"
                 },
                 {
-                    "name": "VERSION",
+                    "name": "email",
+                    "viewName": "Email",
+                    "type": "string"
+                },
+                {
+                    "name": "apiToken",
+                    "viewName": "API Token",
+                    "type": "vault"
+                },
+                {
+                    "name":"project",
+                    "viewName": "Project",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listProjectsAuto"
+                },
+                {
+                    "name":"versionName",
+                    "viewName": "Version Name",
+                    "type": "string"
+                },
+                {
+                    "name":"description",
+                    "viewName": "Description",
+                    "type": "text"
+                },
+                {
+                    "name":"startDate",
+                    "viewName": "Start Date",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"getStartDate"
+                },
+                {
+                    "name":"endDate",
+                    "viewName": "Release Date",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"getEndDate"
+                },
+                {
+                    "name":"archived",
+                    "viewName": "Archived",
+                    "type": "boolean"
+                }
+            ]
+        },
+        {
+            "name":"updateProjectVersion",
+            "viewName" : "Update Project Version",
+            "params": [
+                {
+                    "name": "host",
+                    "viewName": "Host",
+                    "type": "string"
+                },
+                {
+                    "name": "email",
+                    "viewName": "Email",
+                    "type": "string"
+                },
+                {
+                    "name": "apiToken",
+                    "viewName": "API Token",
+                    "type": "vault"
+                },
+                {
+                    "name":"project",
+                    "viewName": "Project",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listProjectsAuto"
+                },
+                {
+                    "name":"version",
                     "viewName": "Version",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listVersionsAuto"
+                },
+                {
+                    "name":"description",
+                    "viewName": "Description",
+                    "type": "text"
+                },
+                {
+                    "name":"startDate",
+                    "viewName": "Start Date",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"getStartDate"
+                },
+                {
+                    "name":"endDate",
+                    "viewName": "Release Date",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"getEndDate"
+                },
+                {
+                    "name":"moveUrl",
+                    "viewName": "Move Unfixed Issues URL",
                     "type": "string"
                 },
                 {
-                    "name": "PROJECT_ID",
-                    "viewName": "Project ID",
-                    "type":"string"
+                    "name":"released",
+                    "viewName": "Released",
+                    "type": "boolean"
+                },
+                {
+                    "name":"archived",
+                    "viewName": "Archived",
+                    "type": "boolean"
+                }
+            ]
+        },
+        {
+            "name":"listTransitions",
+            "viewName" : "List Transitions",
+            "params": [
+                {
+                    "name": "host",
+                    "viewName": "Host",
+                    "type": "string"
+                },
+                {
+                    "name": "email",
+                    "viewName": "Email",
+                    "type": "string"
+                },
+                {
+                    "name": "apiToken",
+                    "viewName": "API Token",
+                    "type": "vault"
+                },
+                {
+                    "name":"project",
+                    "viewName": "Project",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listProjectsAuto"
+                },
+                {
+                    "name":"issue",
+                    "viewName": "Issue",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listIssuesAuto"
+                }
+            ]
+        },
+        {
+            "name":"listProjects",
+            "viewName" : "List Projects",
+            "params": [
+                {
+                    "name": "host",
+                    "viewName": "Host",
+                    "type": "string"
+                },
+                {
+                    "name": "email",
+                    "viewName": "Email",
+                    "type": "string"
+                },
+                {
+                    "name": "apiToken",
+                    "viewName": "API Token",
+                    "type": "vault"
+                }
+            ]
+        },
+        {
+            "name":"listProjectVersions",
+            "viewName" : "List Project Versions",
+            "params": [
+                {
+                    "name": "host",
+                    "viewName": "Host",
+                    "type": "string"
+                },
+                {
+                    "name": "email",
+                    "viewName": "Email",
+                    "type": "string"
+                },
+                {
+                    "name": "apiToken",
+                    "viewName": "API Token",
+                    "type": "vault"
+                },
+                {
+                    "name":"project",
+                    "viewName": "Project",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listProjectsAuto"
                 }
             ]
         }
