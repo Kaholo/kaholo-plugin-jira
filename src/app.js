@@ -1,101 +1,56 @@
-const fetch = require('node-fetch');
+const helpers = require("./helpers");
+const {getClient, stripAction} = helpers; 
+const parsers = require("./parsers");
 
-function updateIssueStatus(action, settings) {
-    /**
-     * Change the status of an issue.
-     */
-    let jHost = action.params.HOST || settings.HOST;
-    const jIssueKey = action.params.ISSUE_KEY;
-    const jStatusID = action.params.STATUS_ID;
-    const method = "POST"
-    jHost = `${jHost}/rest/api/3/issue/${jIssueKey}/transitions?expand=transitions.fields`;
-    let bodyData = {
-      "transition": {
-        id:jStatusID
-      }
-    }
-    return genericRestAPI(action,settings,method, jHost, bodyData)
-}
-
-async function updateVersion (action, settings) {
-  /**
-   * Set status of version to released inside a given project.
-   */
-  const host= action.params.HOST || settings.HOST;
-  const projectId = action.params.PROJECT_ID;
-  const versionId = await getVersionId(action, settings, action.params.VERSION, projectId,host);
-  const jHost = `${host}/rest/api/3/version/${versionId}`
-  const intProjectId = parseInt(projectId);
-  const method = "PUT"
-  let bodyData = {
-    description: "closed by Kaholo automation",
-    projectId:intProjectId,
-    released: true
+async function transitionIssue(action, settings) {
+  const client = getClient(action.params, settings);
+  const issueId = parsers.autocomplete(action.params.issue);
+  const transitionId = parsers.autocomplete(action.params.transition);
+  if (!issueId || !transitionId) {
+    throw "Didn't provide one of the required fields.";
   }
-  return await genericRestAPI(action,settings,method,jHost,bodyData)
+  await client.transitionIssue(issueId, {transition: {"id": transitionId}});
+  return "Success";
 }
 
-async function searchJira(action, settings) {
-  /**
-   * Search Jira with a given JQL
-   */
-  const method = 'POST';
-  const host= action.params.HOST || settings.HOST;
-  const jHost = `${host}/rest/api/3/search`;
-  const jql = action.params.JQL;
-  let bodyData = {
-    jql:jql            
-  }
-  return JSON.parse(await genericRestAPI(action,settings, method, jHost, bodyData))
+async function createProjectVersion(action, settings) {
+  const client = getClient(action.params, settings);
+  const projectId = parsers.autocomplete(action.params.project);
+  const startDate = parsers.autocomplete(action.params.startDate);
+  const releaseDate = parsers.autocomplete(action.params.endDate);
+  const {versionName: name, description, moveUrl, released, archived} = action.params;
+  return client.createVersion({
+    description, name, 
+    released, archived,
+    startDate, releaseDate,
+    projectId,
+    moveUnfixedIssuesTo: moveUrl
+  });
 }
 
-//////////// HELPERS ////////////
-
-async function genericRestAPI(action, settings, method, host, bodyData) {
-/**
- * Send Default API Request
- */
-    const jEmail = action.params.EMAIL || settings.EMAIL;
-    const jApiToken = action.params.TOKEN || settings.TOKEN;
-
-    const response = await fetch(host,  {
-      method: `${method}`,
-      headers: {
-      'Authorization': `Basic ${Buffer.from(
-        `${jEmail}:${jApiToken}`
-       ).toString('base64')}`,
-         'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(bodyData)
-    })
-    return response.text();
-}
-
-async function getVersionId(action, settings, versionName, projectId, host) {
-  /**
-   * Input: 
-   * 1) Version name
-   * 2) Project ID
-   * 3) URL
-   * 
-   * return:
-   *   version ID
-   */
-  const method = "GET";
-  host = `${host}/rest/api/3/project/${projectId}/versions`;
-  let versions = await genericRestAPI(action,settings,method,host)
-  let versionArr = JSON.parse(versions)
-  for (i = 0; i < versionArr.length ; i++){ 
-    if (versionArr[i].name == versionName) {
-      return versionArr[i].id ;
-    }
-  }
-  throw "version not found"
+async function updateProjectVersion(action, settings) {
+  const client = getClient(action.params, settings);
+  const projectId = parsers.autocomplete(action.params.project);
+  const versionId = parsers.autocomplete(action.params.version);
+  const startDate = parsers.autocomplete(action.params.startDate);
+  const releaseDate = parsers.autocomplete(action.params.endDate);
+  const {description, moveUrl, released, archived} = action.params;
+  return client.updateVersion({
+    id: versionId,
+    description, projectId,
+    released, archived,
+    startDate, releaseDate,
+    moveUnfixedIssuesTo: moveUrl
+  });
 }
 
 module.exports = {
-  searchJira: searchJira,
-  UPDATE_ISSUE_STATUS: updateIssueStatus,
-  UPDATE_VERSION: updateVersion
+  transitionIssue,
+  createProjectVersion,
+  updateProjectVersion,
+  listIssues: stripAction(helpers.listIssues),
+  listTransitions: stripAction(helpers.listTransitions),
+  listProjects: stripAction(helpers.listProjects),
+  listProjectVersions: stripAction(helpers.listProjectVersions),
+  ...require("./autocomplete")
 }
