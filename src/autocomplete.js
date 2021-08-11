@@ -64,18 +64,30 @@ function listAuto(listFunc){
 
 async function listIssuesAuto(query, pluginSettings, triggerParameters) {
   const settings = mapAutoParams(pluginSettings), params = mapAutoParams(triggerParameters);
-  const getIssueName = issue => `${issue.key} ${issue.fields.summary} ${issue.fields.status.name}`;
-  const bufSize = 100;
   params.maxResults = MAX_RESULTS;
-  let items = []
+  const getIssueName = issue => `${issue.key} ${issue.fields.summary} ${issue.fields.status.name}`;
+  let items;
+
+  query = query.trim();
   if (!query) {
     items = (await listIssues(params, settings)).issues;
     return handleResult(items, "", getIssueName); 
+  }
+  if (query.match(/^[A-Za-z][A-Za-z0-9\-]*\-[0-9]+$/g)) {
+    try {
+      params.overrideJql = `issueKey = ${query.toUpperCase()}`;
+      items = (await listIssues(params, settings)).issues;
+      if (items.length > 0) return handleResult(items, "", getIssueName); 
+    }
+    catch (err){}
   }
   params.overrideJql = `summary ~ "${query}"${params.project ? ` AND project = ${params.project}` : ""}`;  
   items = (await listIssues(params, settings)).issues;
   // use paging to search
   if (items.length > 0) return handleResult(items, "", getIssueName); 
+
+  // worst case scenerio, loop and search through all issues
+  const bufSize = 100;
   params.maxResults = bufSize;
   params.overrideJql = undefined;
   params.startAt = 0;
