@@ -64,15 +64,26 @@ function listAuto(listFunc){
 
 async function listIssuesAuto(query, pluginSettings, triggerParameters) {
   const settings = mapAutoParams(pluginSettings), params = mapAutoParams(triggerParameters);
-  let items = [];
+  const getIssueName = issue => `${issue.key} ${issue.fields.summary} ${issue.fields.status.name}`;
+  const bufSize = 100;
   params.maxResults = MAX_RESULTS;
-  // paging
+  let items = []
+  if (!query) {
+    items = (await listIssues(params, settings)).issues;
+    return handleResult(items, "", getIssueName); 
+  }
+  params.overrideJql = `summary ~ "${query}"${params.project ? ` AND project = ${params.project}` : ""}`;  
+  items = (await listIssues(params, settings)).issues;
+  // use paging to search
+  if (items.length > 0) return handleResult(items, "", getIssueName); 
+  params.maxResults = bufSize;
+  params.overrideJql = undefined;
+  params.startAt = 0;
   while (items.length < MAX_RESULTS){
-    let result = await listIssues(params, settings);
-    const newItems = handleResult(result.issues, query, issue=> `${issue.key} ${issue.fields.summary || ""} ${issue.fields.status.name || ""}`);
-    items = items.concat(newItems);
-    if (result.startAt + MAX_RESULTS >= result.total) break;
-    params.startAt += MAX_RESULTS;
+    const result = await listIssues(params, settings);
+    items = items.concat(handleResult(result.issues, query, getIssueName));
+    if (result.total < params.startAt + bufSize) break;
+    params.startAt += bufSize;
   }
   return items;
 }
