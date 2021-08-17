@@ -2,15 +2,30 @@ const jira = require("jira-client");
 const parsers = require("./parsers");
 
 function getClient(params, settings){
-    const hostName = params.host || settings.host;
-    const username = params.email || settings.email;
-    const password = params.apiToken || settings.apiToken;
-    if (!hostName || !username || !password) {
+    let host = parsers.string(params.host || settings.host);
+    const username = parsers.string(params.email || settings.email);
+    const password = parsers.string(params.apiToken || settings.apiToken);
+    if (!host || !username || !password) {
         throw "One of the required parameters was not provided";
     }
+
+    let protocol = "https";
+    if (host.startsWith("http://")){
+        protocol = "http";
+        host = host.slice(7);
+    }
+    else if (host.startsWith("https://")){
+        host = host.slice(8);
+    }
+    else if (!host.includes(".")){
+        host = `${host}.atlassian.net`
+    }
+    if (host.endsWith("/")) {
+        host = host.slice(0, -1);
+    }
+
     return new jira({
-        protocol: 'https',
-        host: `${hostName}.atlassian.net`,
+        protocol, host,
         username, password,
         apiVersion: '2',
         strictSSL: true
@@ -59,9 +74,17 @@ async function listStatus(params, settings){
 
 async function listProjectVersions(params, settings){
     const client = getClient(params, settings);
-    const projectKey = parsers.autocomplete(params.project);
-    if (!projectKey) throw "Must provide a project!";
-    return client.getVersions(projectKey);
+    const project = parsers.autocomplete(params.project);
+    if (!project) throw "Must provide a project!";
+    return client.getVersions(project);
+}
+
+async function listIssueTypes(params, settings){
+    const client = getClient(params, settings);
+    let project = parsers.autocomplete(params.project);
+    if (!project) return client.listIssueTypes();
+    project = await client.getProject(project);
+    return project.issueTypes;
 }
 
 function stripAction(func){
@@ -74,6 +97,7 @@ module.exports = {
     listTransitions,
     listStatus,
     listProjectVersions,
+    listIssueTypes,
     getClient,
     stripAction
 }

@@ -44,13 +44,46 @@ async function updateProjectVersion(action, settings) {
   });
 }
 
+async function createIssue(action, settings) {
+  const client = getClient(action.params, settings);
+  const projectId = parsers.autocomplete(action.params.project);
+  const issueTypeId = parsers.autocomplete(action.params.issueType).toString();
+  const {summary, description} = action.params;
+  if (!summary || !projectId || !issueTypeId) throw "One of the required params was not provided.";
+  
+  return client.addNewIssue({
+    update: {},
+    fields: {
+      issuetype: {id: issueTypeId},
+      summary: parsers.string(summary),
+      project: {id: projectId},
+      description: !description ? undefined : description
+    }
+  });
+}
+
+async function addIssueComment(action, settings) {
+  const client = getClient(action.params, settings);
+  const issueId = parsers.autocomplete(action.params.issue);
+  const comment = parsers.string(action.params.comment);
+
+  if (!comment || !issueId) throw "One of the required params was not provided.";
+
+  return client.addComment(issueId, comment);
+}
+
+
 module.exports = {
   transitionIssue,
   createProjectVersion,
   updateProjectVersion,
+  createIssue,
+  addIssueComment,
+  // list methods
   listIssues: stripAction(helpers.listIssues),
   listTransitions: stripAction(helpers.listTransitions),
   listProjects: stripAction(helpers.listProjects),
   listProjectVersions: stripAction(helpers.listProjectVersions),
+  // autocomplete methods
   ...require("./autocomplete")
 }

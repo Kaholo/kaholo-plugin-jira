@@ -1,5 +1,5 @@
 const parsers = require("./parsers");
-const { listProjects, listIssues, listTransitions, listStatus, listProjectVersions } = require("./helpers");
+const { listProjects, listIssues, listTransitions, listStatus, listProjectVersions, listIssueTypes } = require("./helpers");
 
 // auto complete helper methods
 
@@ -68,29 +68,30 @@ async function listIssuesAuto(query, pluginSettings, triggerParameters) {
   const getIssueName = issue => `${issue.key} ${issue.fields.summary} ${issue.fields.status.name}`;
   let items;
 
-  query = query.trim();
-  if (!query) {
-    items = (await listIssues(params, settings)).issues;
-    return handleResult(items, "", getIssueName); 
-  }
-  if (query.match(/^[A-Za-z][A-Za-z0-9\-]*\-[0-9]+$/g)) {
-    try {
-      params.overrideJql = `issueKey = ${query.toUpperCase()}`;
-      items = (await listIssues(params, settings)).issues;
-      if (items.length > 0) return handleResult(items, "", getIssueName); 
+  query = parsers.string(query);
+  if (query) {
+    // try to return results by summary or issueKey and project if specified
+    params.overrideJql = `summary ~ "${query}"`;
+    if (query.match(/^[A-Za-z][A-Za-z0-9\-]*\-[0-9]+$/g)) {
+      params.overrideJql += ` OR issueKey = ${query.toUpperCase()}`;
     }
-    catch (err){}
+    if (params.project){
+      params.overrideJql = `(${params.overrideJql}) AND project = ${params.project}`;
+    }
   }
-  params.overrideJql = `summary ~ "${query}"${params.project ? ` AND project = ${params.project}` : ""}`;  
-  items = (await listIssues(params, settings)).issues;
-  // use paging to search
-  if (items.length > 0) return handleResult(items, "", getIssueName); 
+  try {
+    items = (await listIssues(params, settings)).issues;
+    // best case scenerio, jira accepted query(if provided) and found results
+    if (!query || items.length > 0) return handleResult(items, "", getIssueName); 
+  }
+  catch (err) {}
 
-  // worst case scenerio, loop and search through all issues
+  // worst case scenerio, loop and search through all issues on our own with query
   const bufSize = 100;
   params.maxResults = bufSize;
   params.overrideJql = undefined;
   params.startAt = 0;
+  // return results once found enough results(Decided by MAX_RESULTS) or looped through all issues
   while (items.length < MAX_RESULTS){
     const result = await listIssues(params, settings);
     items = items.concat(handleResult(result.issues, query, getIssueName));
@@ -106,6 +107,7 @@ module.exports = {
   listIssuesAuto,
   listTransitionsAuto: listAuto(listTransitions),
   listVersionsAuto: listAuto(listProjectVersions),
+  listIssueTypesAuto: listAuto(listIssueTypes),
   getStartDate: getDate("startDate"),
   getEndDate: getDate("endDate")
 }
