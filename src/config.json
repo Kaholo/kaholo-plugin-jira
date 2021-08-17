@@ -4,12 +4,12 @@
     "imgUrl": "jira.png",
     "execProgram": "node",
     "main": "app.js",
-    "version": "2.0.2",
+    "version": "2.2.0",
     "description": "Kaholo plugin for integration with Jira API",
     "settings": [
         {
             "name": "host",
-            "viewName": "Host",
+            "viewName": "Jira Server URL",
             "type": "string"
         },
         {
@@ -30,7 +30,7 @@
             "params": [
                 {
                     "name": "host",
-                    "viewName": "Host",
+                    "viewName": "Jira Server URL",
                     "type": "string"
                 },
                 {
@@ -99,7 +99,7 @@
             "params": [
                 {
                     "name": "host",
-                    "viewName": "Host",
+                    "viewName": "Jira Server URL",
                     "type": "string"
                 },
                 {
@@ -141,7 +141,7 @@
             "params": [
                 {
                     "name": "host",
-                    "viewName": "Host",
+                    "viewName": "Jira Server URL",
                     "type": "string"
                 },
                 {
@@ -198,7 +198,7 @@
             "params": [
                 {
                     "name": "host",
-                    "viewName": "Host",
+                    "viewName": "Jira Server URL",
                     "type": "string"
                 },
                 {
@@ -262,12 +262,97 @@
             ]
         },
         {
+            "name":"createIssue",
+            "viewName" : "Create Issue",
+            "params": [
+                {
+                    "name": "host",
+                    "viewName": "Jira Server URL",
+                    "type": "string"
+                },
+                {
+                    "name": "email",
+                    "viewName": "Email",
+                    "type": "string"
+                },
+                {
+                    "name": "apiToken",
+                    "viewName": "API Token",
+                    "type": "vault"
+                },
+                {
+                    "name":"project",
+                    "viewName": "Project",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listProjectsAuto"
+                },
+                {
+                    "name":"issueType",
+                    "viewName": "Issue Type",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listIssueTypesAuto"
+                },
+                {
+                    "name":"summary",
+                    "viewName": "Summary",
+                    "type": "string"
+                },
+                {
+                    "name":"description",
+                    "viewName": "Description",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "name":"addIssueComment",
+            "viewName" : "Add Comment To Issue",
+            "params": [
+                {
+                    "name": "host",
+                    "viewName": "Jira Server URL",
+                    "type": "string"
+                },
+                {
+                    "name": "email",
+                    "viewName": "Email",
+                    "type": "string"
+                },
+                {
+                    "name": "apiToken",
+                    "viewName": "API Token",
+                    "type": "vault"
+                },
+                {
+                    "name":"project",
+                    "viewName": "Project",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listProjectsAuto"
+                },
+                {
+                    "name":"issue",
+                    "viewName": "Issue",
+                    "type": "autocomplete",
+                    "autocompleteType":"function",
+                    "functionName":"listIssuesAuto"
+                },
+                {
+                    "name":"comment",
+                    "viewName": "Comment",
+                    "type": "text"
+                }
+            ]
+        },
+        {
             "name":"listTransitions",
             "viewName" : "List Transitions",
             "params": [
                 {
                     "name": "host",
-                    "viewName": "Host",
+                    "viewName": "Jira Server URL",
                     "type": "string"
                 },
                 {
@@ -302,7 +387,7 @@
             "params": [
                 {
                     "name": "host",
-                    "viewName": "Host",
+                    "viewName": "Jira Server URL",
                     "type": "string"
                 },
                 {
@@ -323,7 +408,7 @@
             "params": [
                 {
                     "name": "host",
-                    "viewName": "Host",
+                    "viewName": "Jira Server URL",
                     "type": "string"
                 },
                 {

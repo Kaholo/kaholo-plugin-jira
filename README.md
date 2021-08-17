@@ -2,7 +2,7 @@
 Kaholo plugin for integration with Jira API.
 
 ## Settings
-1. Host (String) **Optional** - The host name of your default atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+1. Jira Server URL (String) **Optional** - The URL for your default Jira server. Supports either http or https. **In case the URL is in format of https://\<Host-Name\>.atlassian.net, it's enough to enter the host name.**
 2. Email (String) **Optional** - The email of the default user to use for authentication.
 3. API Token (Vault) **Optional** - The API token of the default user to use for authentication.
 
@@ -12,7 +12,7 @@ Kaholo plugin for integration with Jira API.
 List all issues that match the specified filters.
 
 ### Parameters
-1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+1. Jira Server URL (String) **Optional** - The URL for your Jira server. Supports either http or https. 
 2. Email (String) **Optional** - The email of the user to use for authentication.
 3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
 4. Project (Autocomplete) **Optional** - If specified, list issues only inside the specified project.
@@ -28,7 +28,7 @@ List all issues that match the specified filters.
 Transition the specified issue with the specified transition. Usually transitions match status names, and are made to change issue status.
 
 ### Parameters
-1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+1. Jira Server URL (String) **Optional** - The URL for your Jira server. Supports either http or https. 
 2. Email (String) **Optional** - The email of the user to use for authentication.
 3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
 4. Project (Autocomplete) **Optional** - If specified, see only issues from the specified project when selecting an issue from autocomplete in the next parameter.
@@ -39,7 +39,7 @@ Transition the specified issue with the specified transition. Usually transition
 Create a new project version.
 
 ### Parameters
-1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+1. Jira Server URL (String) **Optional** - The URL for your Jira server. Supports either http or https. 
 2. Email (String) **Optional** - The email of the user to use for authentication.
 3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
 4. Project (Autocomplete) **Required** - The project to create the version of.
@@ -53,7 +53,7 @@ Create a new project version.
 Update Project Version
 
 ### Parameters
-1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+1. Jira Server URL (String) **Optional** - The URL for your Jira server. Supports either http or https. 
 2. Email (String) **Optional** - The email of the user to use for authentication.
 3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
 4. Project (Autocomplete) **Required** - The project to update it's version.
@@ -65,11 +65,34 @@ Update Project Version
 10. Released (Boolean) **Optional** - If specified, release the specified version.
 11. Archived (Boolean) **Optional** - If specified, archive the specified version.
 
+## Method: Create Issue
+Create a new issue inside the specified project.
+
+### Parameters
+1. Jira Server URL (String) **Optional** - The URL for your Jira server. Supports either http or https. 
+2. Email (String) **Optional** - The email of the user to use for authentication.
+3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
+4. Project (Autocomplete) **Required** - The project to create the issue in.
+5. Issue Type (Autocomplete) **Required** - The type of issue to create.
+6. Summary (Text) **Required** - The title/summary of the new issue.
+7. Description (Text) **Optional** - The description of the new issue.
+
+## Method: Add Comment To Issue
+Add a new comment to an issue.
+
+### Parameters
+1. Jira Server URL (String) **Optional** - The URL for your Jira server. Supports either http or https. 
+2. Email (String) **Optional** - The email of the user to use for authentication.
+3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
+4. Project (Autocomplete) **Optional** - The project of the issue.
+5. Issue (Autocomplete) **Required** - The issue to add the comment to.
+6. Comment (Text) **Required** - The comment to add to the issue.
+
 ## Method: List Transitions
 List all transitions for the specified issue.
 
 ### Parameters
-1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+1. Jira Server URL (String) **Optional** - The URL for your Jira server. Supports either http or https. 
 2. Email (String) **Optional** - The email of the user to use for authentication.
 3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
 4. Project (Autocomplete) **Required** - The project of the issue.
@@ -79,7 +102,7 @@ List all transitions for the specified issue.
 List all projects in your account.
 
 ### Parameters
-1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+1. Jira Server URL (String) **Optional** - The URL for your Jira server. Supports either http or https. 
 2. Email (String) **Optional** - The email of the user to use for authentication.
 3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
 
@@ -87,7 +110,7 @@ List all projects in your account.
 List all verions of the specified project.
 
 ### Parameters
-1. Host (String) **Optional** - The host name of your atlassian URL. You can get it from your atlassian URL in the format of: \<Host\>.atlassian.net
+1. Jira Server URL (String) **Optional** - The URL for your Jira server. Supports either http or https. 
 2. Email (String) **Optional** - The email of the user to use for authentication.
 3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
 4. Project (Autocomplete) **Required** - The project to list it's versions.
