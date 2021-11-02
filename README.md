@@ -57,7 +57,7 @@ Update Project Version
 2. Email (String) **Optional** - The email of the user to use for authentication.
 3. API Token (Vault) **Optional** - The API token of the user to use for authentication.
 4. Project (Autocomplete) **Required** - The project to update it's version.
-5. Version (String) **Required** - The version to update.
+5. Version (Autocomplete) **Required** - The version to update.
 6. Description (Text) **Optional** - If specified update the description of the version with the specified value.
 7. Start Date (Autocomplete) **Optional** - The start date of the new version. If specified update the start date of the version with the specified value.
 8. Release Date (Autocomplete) **Optional** - The release date of the version. If specified update the release date of the version with the specified value.
