@@ -17,7 +17,7 @@ function mapAutoParams(autoParams){
  * @returns {[{id, value}]} filtered result items
  ***/
 function handleResult(result, query, getName){
-  const items = result.map(item => {
+  const items = (result || []).map(item => {
     if (item.id && typeof(item.id) === "number") item.id = item.id.toString();
     const val = getName ? getName(item) :
                 item.name ? item.name :
@@ -57,8 +57,13 @@ function getDate(paramName){
 function listAuto(listFunc){
   return async (query, pluginSettings, triggerParameters) => {
     const settings = mapAutoParams(pluginSettings), params = mapAutoParams(triggerParameters); 
-    let result = await listFunc(params, settings);
-    return handleResult(result, query);
+    try {
+      let result = await listFunc(params, settings);
+      return handleResult(result, query);
+    }
+    catch (err) {
+      throw `Error during '${listFunc}': ${err.message || JSON.stringify(err)}`
+    }
   }
 }
 
@@ -92,11 +97,16 @@ async function listIssuesAuto(query, pluginSettings, triggerParameters) {
   params.overrideJql = undefined;
   params.startAt = 0;
   // return results once found enough results(Decided by MAX_RESULTS) or looped through all issues
-  while (items.length < MAX_RESULTS){
-    const result = await listIssues(params, settings);
-    items = items.concat(handleResult(result.issues, query, getIssueName));
-    if (result.total < params.startAt + bufSize) break;
-    params.startAt += bufSize;
+  try {
+    while (items.length < MAX_RESULTS){
+      const result = await listIssues(params, settings);
+      items = items.concat(handleResult(result.issues, query, getIssueName));
+      if (result.total < params.startAt + bufSize) break;
+      params.startAt += bufSize;
+    }
+  }
+  catch (err) {
+    throw `Error with 'listIssues': ${err.message || JSON.stringify(err)}`
   }
   return items;
 }
