@@ -4,10 +4,20 @@
   "imgUrl": "jira.png",
   "execProgram": "node",
   "main": "app.js",
-  "version": "2.2.1",
+  "version": "2.2.3",
   "description": "Kaholo plugin for integration with Jira API",
-  "category": ["PROJECT MANAGEMENT", "ISSUE TRACKING"],
-  "keywords": ["ticket", "card", "troubleticket", "malfunction", "incident", "notification", "Atlassian", "sprint", "alert"],
+  "category": "ISSUE TRACKING",
+  "keywords": [
+    "ticket",
+    "card",
+    "troubleticket",
+    "malfunction",
+    "incident",
+    "notification",
+    "Atlassian",
+    "sprint",
+    "alert"
+  ],
   "settings": [
     {
       "name": "host",
