@@ -1,5 +1,5 @@
 {
-  "name": "JIRA",
+  "name": "jira",
   "type": "executer",
   "imgUrl": "jira.png",
   "execProgram": "node",
