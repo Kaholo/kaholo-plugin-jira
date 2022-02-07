@@ -4,8 +4,8 @@
   "imgUrl": "jira.png",
   "execProgram": "node",
   "main": "app.js",
-  "version": "2.2.41",
-  "description": "Kaholo plugin for integration with Jira API-RRais",
+  "version": "2.2.4",
+  "description": "Kaholo plugin for integration with Jira API",
   "category": "ISSUE TRACKING",
   "keywords": [
     "ticket",
@@ -113,20 +113,40 @@
           "placeholder": "2021-11-04",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },
-       {
-          "name": "users",
-          "viewName": "Users",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "listUsersAuto",
-          "description": "Show Users",
-          "group": "kaholo",
-          "placeholder": "Users",
+        {
+          "name": "overrideJql",
+          "viewName": "Override JQL",
+          "type": "string",
+          "description": "Advanced search which allows to build structured queries using the Jira Query Language (JQL) to search for issues. You can specify criteria that cannot be defined in the quick or basic searches.",
+          "placeholder": "ORDER BY clause",
+          "learnUrl": "https://www.atlassian.com/software/jira/guides/expand-jira/jql#advanced-search"
+        },
+        {
+          "name": "fields",
+          "viewName": "Fields",
+          "type": "text",
+          "description": "List only specific fields.",
+          "placeholder": "priority",
+          "learnUrl": "https://confluence.atlassian.com/adminjiraserver/adding-a-custom-field-938847222.html"
+        },
+        {
+          "name": "maxResults",
+          "viewName": "Max Results",
+          "type": "string",
+          "description": "Maximum number of results to show.",
+          "placeholder": "50",
           "learnUrl": "https://confluence.atlassian.com/jiracoreserver085/working-with-search-results-981157534.html"
+        },
+        {
+          "name": "startAt",
+          "viewName": "Results Offset",
+          "type": "string",
+          "description": "Return results from a specified offset index.",
+          "placeholder": "issueHistory()",
+          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-functions/"
         }
       ]
     },
-
     {
       "name": "listAssigneedetails",
       "viewName": "Get Assignee Details",
@@ -162,7 +182,7 @@
           "type": "string",
           "description": "Group Name of Kaholo users",
           "placeholder": "jira-users",
-          "learnUrl": "https://confluence.atlassian.com/jiracoreserver085/working-with-search-results-981157534.html"
+          "learnUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-groups/#api-rest-api-3-group-bulk-get"
         },
         {
           "name": "users",
@@ -172,7 +192,7 @@
           "functionName": "listUsersAuto",
           "description": "Show Users",
           "placeholder": "Users",
-          "learnUrl": "https://confluence.atlassian.com/jiracoreserver085/working-with-search-results-981157534.html"
+          "learnUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-groups/#api-rest-api-3-group-bulk-get"
         },
         {
           "name": "startDate",
