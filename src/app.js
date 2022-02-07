@@ -84,6 +84,7 @@ module.exports = {
   listTransitions: stripAction(helpers.listTransitions),
   listProjects: stripAction(helpers.listProjects),
   listProjectVersions: stripAction(helpers.listProjectVersions),
+  listAssigneedetails:stripAction(helpers.listAssigneedetails),
   // autocomplete methods
   ...require("./autocomplete")
 }

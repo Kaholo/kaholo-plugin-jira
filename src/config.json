@@ -1,11 +1,11 @@
 {
-  "name": "jira",
+  "name": "JIRA",
   "type": "executer",
   "imgUrl": "jira.png",
   "execProgram": "node",
   "main": "app.js",
-  "version": "2.2.3",
-  "description": "Kaholo plugin for integration with Jira API",
+  "version": "2.2.41",
+  "description": "Kaholo plugin for integration with Jira API-RRais",
   "category": "ISSUE TRACKING",
   "keywords": [
     "ticket",
@@ -113,37 +113,86 @@
           "placeholder": "2021-11-04",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },
+       {
+          "name": "users",
+          "viewName": "Users",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listUsersAuto",
+          "description": "Show Users",
+          "group": "kaholo",
+          "placeholder": "Users",
+          "learnUrl": "https://confluence.atlassian.com/jiracoreserver085/working-with-search-results-981157534.html"
+        }
+      ]
+    },
+
+    {
+      "name": "listAssigneedetails",
+      "viewName": "Get Assignee Details",
+      "params": [
         {
-          "name": "overrideJql",
-          "viewName": "Override JQL",
+          "name": "host",
+          "viewName": "Jira Server URL",
           "type": "string",
-          "description": "Advanced search which allows to build structured queries using the Jira Query Language (JQL) to search for issues. You can specify criteria that cannot be defined in the quick or basic searches.",
-          "placeholder": "ORDER BY clause",
-          "learnUrl": "https://www.atlassian.com/software/jira/guides/expand-jira/jql#advanced-search"
+          "description": "Your JIRA login URL.",
+          "placeholder": "https://google.atlassian.net/",
+          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
         },
         {
-          "name": "fields",
-          "viewName": "Fields",
-          "type": "text",
-          "description": "List only specific fields.",
-          "placeholder": "priority",
-          "learnUrl": "https://confluence.atlassian.com/adminjiraserver/adding-a-custom-field-938847222.html"
+          "name": "email",
+          "viewName": "Email",
+          "type": "string",
+          "description": "User email for accessibility.",
+          "placeholder": "user@domain.com",
+          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
         },
         {
-          "name": "maxResults",
-          "viewName": "Max Results",
+          "name": "apiToken",
+          "viewName": "API Token",
+          "type": "vault",
+          "description": "API token for the user to be able to authenticate and connect.",
+          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
+          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
+        },
+
+        {
+          "name": "group",
+          "viewName": "Group Name",
           "type": "string",
-          "description": "Maximum number of results to show.",
-          "placeholder": "50",
+          "description": "Group Name of Kaholo users",
+          "placeholder": "jira-users",
           "learnUrl": "https://confluence.atlassian.com/jiracoreserver085/working-with-search-results-981157534.html"
         },
         {
-          "name": "startAt",
-          "viewName": "Results Offset",
-          "type": "string",
-          "description": "Return results from a specified offset index.",
-          "placeholder": "issueHistory()",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-functions/"
+          "name": "users",
+          "viewName": "Users",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listUsersAuto",
+          "description": "Show Users",
+          "placeholder": "Users",
+          "learnUrl": "https://confluence.atlassian.com/jiracoreserver085/working-with-search-results-981157534.html"
+        },
+        {
+          "name": "startDate",
+          "viewName": "Created After Date",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "getStartDate",
+          "description": "List only those created after a mentioned date.",
+          "placeholder": "01-01-2022",
+          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
+        },
+        {
+          "name": "endDate",
+          "viewName": "Created Before Date",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "getEndDate",
+          "description": "List only those created before a mentioned date.",
+          "placeholder": "12-31-2022",
+          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         }
       ]
     },

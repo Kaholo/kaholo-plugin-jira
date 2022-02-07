@@ -1,5 +1,5 @@
 const parsers = require("./parsers");
-const { listProjects, listIssues, listTransitions, listStatus, listProjectVersions, listIssueTypes } = require("./helpers");
+const { listProjects, listIssues, listTransitions, listStatus, listProjectVersions, listIssueTypes, listUsers } = require("./helpers");
 
 // auto complete helper methods
 
@@ -43,15 +43,25 @@ function getDate(paramName){
   return async (query, pluginSettings, pluginActionParams) => {
     const params = mapAutoParams(pluginActionParams);
     query = query || params[paramName];
-    let queryTime = new Date().toISOString().split("T")[0];
+   // let queryTime = new Date().toISOString().split("T")[0];
+    let date = new Date();
+    queryTime= (((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear());
+  
     if (query){
       try {
-        queryTime = new Date(query).toISOString().split("T")[0];
+       // queryTime = new Date(query).toISOString().split("T")[0];
+        date = new Date(query);
+        queryTime= (((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear());
+  
       } catch (err) {}
     }
     return [{id: queryTime, value: queryTime}];
   }
 }
+
+
+
+
 
 // auto complete main methods
 function listAuto(listFunc){
@@ -111,6 +121,7 @@ async function listIssuesAuto(query, pluginSettings, triggerParameters) {
   return items;
 }
 
+
 module.exports = {
   listProjectsAuto: listAuto(listProjects),
   listStatusAuto: listAuto(listStatus),
@@ -118,6 +129,7 @@ module.exports = {
   listTransitionsAuto: listAuto(listTransitions),
   listVersionsAuto: listAuto(listProjectVersions),
   listIssueTypesAuto: listAuto(listIssueTypes),
+  listUsersAuto: listAuto(listUsers),
   getStartDate: getDate("startDate"),
   getEndDate: getDate("endDate")
 }

@@ -1,7 +1,7 @@
 {
-  "name": "kaholo-plugin-jira",
-  "version": "1.1.0",
-  "description": "Kaholo Plugin for integration with Jira API",
+  "name": "JIRA-Plugin",
+  "version": "2.2.41",
+  "description": "Kaholo Plugin for integration with Jira API-Rishi Rais",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
