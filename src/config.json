@@ -4,7 +4,7 @@
   "imgUrl": "jira.png",
   "execProgram": "node",
   "main": "app.js",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "Kaholo plugin for integration with Jira API",
   "category": "ISSUE TRACKING",
   "keywords": [
@@ -144,6 +144,75 @@
           "description": "Return results from a specified offset index.",
           "placeholder": "issueHistory()",
           "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-functions/"
+        }
+      ]
+    },
+    {
+      "name": "listAssigneedetails",
+      "viewName": "Get Assignee Details",
+      "params": [
+        {
+          "name": "host",
+          "viewName": "Jira Server URL",
+          "type": "string",
+          "description": "Your JIRA login URL.",
+          "placeholder": "https://google.atlassian.net/",
+          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
+        },
+        {
+          "name": "email",
+          "viewName": "Email",
+          "type": "string",
+          "description": "User email for accessibility.",
+          "placeholder": "user@domain.com",
+          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
+        },
+        {
+          "name": "apiToken",
+          "viewName": "API Token",
+          "type": "vault",
+          "description": "API token for the user to be able to authenticate and connect.",
+          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
+          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
+        },
+
+        {
+          "name": "group",
+          "viewName": "Group Name",
+          "type": "string",
+          "description": "Group Name of Kaholo users",
+          "placeholder": "jira-users",
+          "learnUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-groups/#api-rest-api-3-group-bulk-get"
+        },
+        {
+          "name": "users",
+          "viewName": "Users",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listUsersAuto",
+          "description": "Show Users",
+          "placeholder": "Users",
+          "learnUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-groups/#api-rest-api-3-group-bulk-get"
+        },
+        {
+          "name": "startDate",
+          "viewName": "Created After Date",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "getStartDate",
+          "description": "List only those created after a mentioned date.",
+          "placeholder": "01-01-2022",
+          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
+        },
+        {
+          "name": "endDate",
+          "viewName": "Created Before Date",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "getEndDate",
+          "description": "List only those created before a mentioned date.",
+          "placeholder": "12-31-2022",
+          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         }
       ]
     },

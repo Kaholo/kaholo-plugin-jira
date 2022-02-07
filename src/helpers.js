@@ -1,7 +1,7 @@
 const jira = require("jira-client");
 const parsers = require("./parsers");
 
-function getClient(params, settings){
+function getClient(params, settings) {
     let host = parsers.string(params.host || settings.host);
     const username = parsers.string(params.email || settings.email);
     const password = parsers.string(params.apiToken || settings.apiToken);
@@ -10,14 +10,14 @@ function getClient(params, settings){
     }
 
     let protocol = "https";
-    if (host.startsWith("http://")){
+    if (host.startsWith("http://")) {
         protocol = "http";
         host = host.slice(7);
     }
-    else if (host.startsWith("https://")){
+    else if (host.startsWith("https://")) {
         host = host.slice(8);
     }
-    else if (!host.includes(".")){
+    else if (!host.includes(".")) {
         host = `${host}.atlassian.net`
     }
     if (host.endsWith("/")) {
@@ -32,26 +32,27 @@ function getClient(params, settings){
     });
 }
 
-async function listProjects(params, settings){
+async function listProjects(params, settings) {
     const client = getClient(params, settings);
     return client.listProjects();
 }
 
-async function listIssues(params, settings){
+async function listIssues(params, settings) {
     const client = getClient(params, settings);
     const startAt = parsers.number(params.startAt) || 0;
     const maxResults = parsers.number(params.maxResults) || 50;
-    const fields =  params.fields == "*" ? undefined :
-                    parsers.array(params.fields || ["created", "description", "summary", "status", "priority"]);
+    const fields = params.fields == "*" ? undefined :
+        parsers.array(params.fields || ["created", "description", "summary", "status", "priority"]);
     let jql = "";
-    if (params.overrideJql){
+    if (params.overrideJql) {
         jql = parsers.string(params.overrideJql);
     }
     else {
+
         const projectKey = parsers.autocomplete(params.project);
         const statusId = parsers.autocomplete(params.status);
         if (projectKey) jql = `project = ${projectKey}`;
-        if (statusId) jql += `${jql ? " AND ": ""}status = ${statusId}`;
+        if (statusId) jql += `${jql ? " AND " : ""}status = ${statusId}`;
     }
     return client.searchJira(jql, {
         maxResults,
@@ -60,26 +61,65 @@ async function listIssues(params, settings){
     });
 }
 
-async function listTransitions(params, settings){
+
+
+async function listAssigneedetails(params, settings) {
+    const client = getClient(params, settings);
+    const startDate = parsers.autocomplete(params.startDate);
+    const endDate = parsers.autocomplete(params.endDate);
+    const startDateformatted= new Date(startDate).toISOString().split("T")[0];
+    const endDateformatted= new Date(endDate).toISOString().split("T")[0];
+    const startAt =  0;
+    const maxResults = 50;
+    const fields = params.fields == "*" ? undefined :
+        parsers.array(params.fields || ["created", "description", "summary", "status", "priority","assignee","reporter","project"]);
+    let jql = "";
+    if (params.overrideJql) {
+        jql = parsers.string(params.overrideJql);
+    }
+    else {
+
+        const assignee= parsers.autocomplete(params.users);
+        if (assignee) jql = `assignee in ('${assignee}')`;
+        if (startDate) jql += `${jql ? " AND " : ""}updated >= ${startDateformatted}`;
+        if (endDate) jql += `${jql ? " AND " : ""}updated <= ${endDateformatted}`;
+    }
+    return client.searchJira(jql, {
+        maxResults,
+        fields,
+        startAt
+    });
+}
+
+async function listTransitions(params, settings) {
     const client = getClient(params, settings);
     const issueId = parsers.autocomplete(params.issue);
     if (!issueId) throw "Must provide issue ID to get transitions"
     return (await client.listTransitions(issueId)).transitions;
 }
 
-async function listStatus(params, settings){
+async function listStatus(params, settings) {
     const client = getClient(params, settings);
     return client.listStatus();
 }
 
-async function listProjectVersions(params, settings){
+async function listUsers(params, settings) {
+    const client = getClient(params, settings);
+    const usersgroup = await client.getUsersInGroup(params.group);
+    const userslist = usersgroup.users;
+    const usersdetails = userslist.items;
+    return usersdetails; 
+}
+
+
+async function listProjectVersions(params, settings) {
     const client = getClient(params, settings);
     const project = parsers.autocomplete(params.project);
     if (!project) throw "Must provide a project!";
     return client.getVersions(project);
 }
 
-async function listIssueTypes(params, settings){
+async function listIssueTypes(params, settings) {
     const client = getClient(params, settings);
     let project = parsers.autocomplete(params.project);
     if (!project) return client.listIssueTypes();
@@ -87,7 +127,7 @@ async function listIssueTypes(params, settings){
     return project.issueTypes;
 }
 
-function stripAction(func){
+function stripAction(func) {
     return (action, settings) => func(action.params, settings);
 }
 
@@ -99,6 +139,8 @@ module.exports = {
     listProjectVersions,
     listIssueTypes,
     getClient,
-    stripAction
+    stripAction,
+    listUsers,
+    listAssigneedetails
 }
-  
+
