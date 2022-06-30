@@ -18,35 +18,40 @@
     "sprint",
     "alert"
   ],
+  "auth": {
+    "authId": "jiraAccount",
+    "params": [
+      {
+        "name": "host",
+        "viewName": "Jira Server URL",
+        "type": "string",
+        "description": "Your JIRA login URL.",
+        "placeholder": "https://google.atlassian.net/",
+        "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
+      },
+      {
+        "name": "email",
+        "viewName": "Email",
+        "type": "string",
+        "description": "User email for accessibility.",
+        "placeholder": "user@domain.com",
+        "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
+      },
+      {
+        "name": "apiToken",
+        "viewName": "API Token",
+        "type": "vault",
+        "description": "API token for the user to be able to authenticate and connect.",
+        "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
+        "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
+      }
+    ]
+  },
   "methods": [
     {
       "name": "transitionIssue",
       "viewName": "Transition Issue Status",
       "params": [
-        {
-          "name": "host",
-          "viewName": "Jira Server URL",
-          "type": "string",
-          "description": "Your JIRA login URL.",
-          "placeholder": "https://google.atlassian.net/",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
-        },
-        {
-          "name": "email",
-          "viewName": "Email",
-          "type": "string",
-          "description": "User email for accessibility.",
-          "placeholder": "user@domain.com",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
-        },
-        {
-          "name": "apiToken",
-          "viewName": "API Token",
-          "type": "vault",
-          "description": "API token for the user to be able to authenticate and connect.",
-          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
-          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-        },
         {
           "name": "project",
           "viewName": "Project",
@@ -85,30 +90,6 @@
       "name": "createProjectVersion",
       "viewName": "Create Project Version",
       "params": [
-        {
-          "name": "host",
-          "viewName": "Jira Server URL",
-          "type": "string",
-          "description": "Your JIRA login URL.",
-          "placeholder": "https://google.atlassian.net/",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
-        },
-        {
-          "name": "email",
-          "viewName": "Email",
-          "type": "string",
-          "description": "User email for accessibility.",
-          "placeholder": "user@domain.com",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
-        },
-        {
-          "name": "apiToken",
-          "viewName": "API Token",
-          "type": "vault",
-          "description": "API token for the user to be able to authenticate and connect.",
-          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
-          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-        },
         {
           "name": "project",
           "viewName": "Project",
@@ -165,30 +146,6 @@
       "name": "updateProjectVersion",
       "viewName": "Update Project Version",
       "params": [
-        {
-          "name": "host",
-          "viewName": "Jira Server URL",
-          "type": "string",
-          "description": "Your JIRA login URL.",
-          "placeholder": "https://google.atlassian.net/",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
-        },
-        {
-          "name": "email",
-          "viewName": "Email",
-          "type": "string",
-          "description": "User email for accessibility.",
-          "placeholder": "user@domain.com",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
-        },
-        {
-          "name": "apiToken",
-          "viewName": "API Token",
-          "type": "vault",
-          "description": "API token for the user to be able to authenticate and connect.",
-          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
-          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-        },
         {
           "name": "project",
           "viewName": "Project",
@@ -265,30 +222,6 @@
       "viewName": "Create Issue",
       "params": [
         {
-          "name": "host",
-          "viewName": "Jira Server URL",
-          "type": "string",
-          "description": "Your JIRA login URL.",
-          "placeholder": "https://google.atlassian.net/",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
-        },
-        {
-          "name": "email",
-          "viewName": "Email",
-          "type": "string",
-          "description": "User email for accessibility.",
-          "placeholder": "user@domain.com",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
-        },
-        {
-          "name": "apiToken",
-          "viewName": "API Token",
-          "type": "vault",
-          "description": "API token for the user to be able to authenticate and connect.",
-          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
-          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-        },
-        {
           "name": "project",
           "viewName": "Project",
           "type": "autocomplete",
@@ -334,30 +267,6 @@
       "viewName": "Add Comment To Issue",
       "params": [
         {
-          "name": "host",
-          "viewName": "Jira Server URL",
-          "type": "string",
-          "description": "Your JIRA login URL.",
-          "placeholder": "https://google.atlassian.net/",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
-        },
-        {
-          "name": "email",
-          "viewName": "Email",
-          "type": "string",
-          "description": "User email for accessibility.",
-          "placeholder": "user@domain.com",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
-        },
-        {
-          "name": "apiToken",
-          "viewName": "API Token",
-          "type": "vault",
-          "description": "API token for the user to be able to authenticate and connect.",
-          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
-          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-        },
-        {
           "name": "issue",
           "viewName": "Issue",
           "type": "autocomplete",
@@ -383,30 +292,6 @@
       "name": "listIssues",
       "viewName": "List Issues",
       "params": [
-        {
-          "name": "host",
-          "viewName": "Jira Server URL",
-          "type": "string",
-          "description": "Your JIRA login URL.",
-          "placeholder": "https://google.atlassian.net/",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
-        },
-        {
-          "name": "email",
-          "viewName": "Email",
-          "type": "string",
-          "description": "User email for accessibility.",
-          "placeholder": "user@domain.com",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
-        },
-        {
-          "name": "apiToken",
-          "viewName": "API Token",
-          "type": "vault",
-          "description": "API token for the user to be able to authenticate and connect.",
-          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
-          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-        },
         {
           "name": "project",
           "viewName": "Project",
@@ -485,30 +370,6 @@
       "viewName": "List Transitions",
       "params": [
         {
-          "name": "host",
-          "viewName": "Jira Server URL",
-          "type": "string",
-          "description": "Your JIRA login URL.",
-          "placeholder": "https://google.atlassian.net/",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
-        },
-        {
-          "name": "email",
-          "viewName": "Email",
-          "type": "string",
-          "description": "User email for accessibility.",
-          "placeholder": "user@domain.com",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
-        },
-        {
-          "name": "apiToken",
-          "viewName": "API Token",
-          "type": "vault",
-          "description": "API token for the user to be able to authenticate and connect.",
-          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
-          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-        },
-        {
           "name": "issue",
           "viewName": "Issue",
           "type": "autocomplete",
@@ -524,61 +385,12 @@
     {
       "name": "listProjects",
       "viewName": "List Projects",
-      "params": [
-        {
-          "name": "host",
-          "viewName": "Jira Server URL",
-          "type": "string",
-          "description": "Your JIRA login URL.",
-          "placeholder": "https://google.atlassian.net/",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
-        },
-        {
-          "name": "email",
-          "viewName": "Email",
-          "type": "string",
-          "description": "User email for accessibility.",
-          "placeholder": "user@domain.com",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
-        },
-        {
-          "name": "apiToken",
-          "viewName": "API Token",
-          "type": "vault",
-          "description": "API token for the user to be able to authenticate and connect.",
-          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
-          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-        }
-      ]
+      "params": []
     },
     {
       "name": "listProjectVersions",
       "viewName": "List Project Versions",
       "params": [
-        {
-          "name": "host",
-          "viewName": "Jira Server URL",
-          "type": "string",
-          "description": "Your JIRA login URL.",
-          "placeholder": "https://google.atlassian.net/",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
-        },
-        {
-          "name": "email",
-          "viewName": "Email",
-          "type": "string",
-          "description": "User email for accessibility.",
-          "placeholder": "user@domain.com",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
-        },
-        {
-          "name": "apiToken",
-          "viewName": "API Token",
-          "type": "vault",
-          "description": "API token for the user to be able to authenticate and connect.",
-          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
-          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-        },
         {
           "name": "project",
           "viewName": "Project",
@@ -596,31 +408,6 @@
       "name": "listAssigneeDetails",
       "viewName": "Get Assignee Details",
       "params": [
-        {
-          "name": "host",
-          "viewName": "Jira Server URL",
-          "type": "string",
-          "description": "Your JIRA login URL.",
-          "placeholder": "https://google.atlassian.net/",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
-        },
-        {
-          "name": "email",
-          "viewName": "Email",
-          "type": "string",
-          "description": "User email for accessibility.",
-          "placeholder": "user@domain.com",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
-        },
-        {
-          "name": "apiToken",
-          "viewName": "API Token",
-          "type": "vault",
-          "description": "API token for the user to be able to authenticate and connect.",
-          "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
-          "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-        },
-
         {
           "name": "group",
           "viewName": "Group Name",
