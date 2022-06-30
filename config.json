@@ -4,7 +4,7 @@
   "imgUrl": "jira.png",
   "execProgram": "node",
   "main": "app.js",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "description": "Kaholo plugin for integration with Jira API",
   "category": "ISSUE TRACKING",
   "keywords": [
