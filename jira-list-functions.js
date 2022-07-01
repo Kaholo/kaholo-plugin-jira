@@ -1,4 +1,4 @@
-const { getJiraClient } = require("./helpers");
+const { getJiraClient, formatDate } = require("./helpers");
 
 const DEFAULT_FIELDS = ["created", "description", "summary", "status", "priority"];
 const DEFAULT_MAX_RESULTS = 50;
@@ -30,11 +30,11 @@ function listIssues({
     jqlSegments.push(`status = ${status}`);
   }
   if (!customJqlString && startDate) {
-    const startDateFormatted = new Date(startDate).toISOString().split("T")[0];
+    const startDateFormatted = formatDate(startDate);
     jqlSegments.push(`updated >= ${startDateFormatted}`);
   }
   if (!customJqlString && endDate) {
-    const endDateFormatted = new Date(endDate).toISOString().split("T")[0];
+    const endDateFormatted = formatDate(endDate);
     jqlSegments.push(`updated <= ${endDateFormatted}`);
   }
 
@@ -68,11 +68,11 @@ function listAssigneeDetails({
     jqlSegments.push(`assignee in ('${assignee}')`);
   }
   if (!customJqlString && startDate) {
-    const startDateFormatted = new Date(startDate).toISOString().split("T")[0];
+    const startDateFormatted = formatDate(startDate);
     jqlSegments.push(`updated >= ${startDateFormatted}`);
   }
   if (!customJqlString && endDate) {
-    const endDateFormatted = new Date(endDate).toISOString().split("T")[0];
+    const endDateFormatted = formatDate(endDate);
     jqlSegments.push(`updated <= ${endDateFormatted}`);
   }
 
@@ -141,7 +141,7 @@ async function listUsers({
   const client = getJiraClient({ host, email, apiToken });
 
   const usersResult = await client.getUsersInGroup(group);
-  return usersResult.users.items;
+  return usersResult?.users?.items;
 }
 
 function listStatus({

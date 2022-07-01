@@ -22,6 +22,9 @@ function getJiraClient({
   });
 }
 
+const formatDate = (dateString) => new Date(dateString).toISOString().split("T")[0];
+
 module.exports = {
   getJiraClient,
+  formatDate,
 };
