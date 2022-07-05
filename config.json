@@ -1,12 +1,12 @@
 {
   "name": "jira",
   "type": "executer",
-  "imgUrl": "jira.png",
+  "imgUrl": "logo.png",
   "execProgram": "node",
   "main": "app.js",
   "version": "3.0.0",
   "description": "Kaholo plugin for integration with Jira API",
-  "category": "ISSUE TRACKING",
+  "category": "Issue Tracking",
   "keywords": [
     "ticket",
     "card",
