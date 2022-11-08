@@ -9,7 +9,7 @@
   "author": "Kaholo Group",
   "license": "ISC",
   "dependencies": {
-    "@kaholo/plugin-library": "^2.0.0",
+    "@kaholo/plugin-library": "^2.1.2",
     "jira-client": "8.1.0",
     "lodash": "4.17.21"
   },
