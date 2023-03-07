@@ -144,14 +144,30 @@ async function listUsers({
   return usersResult?.users?.items;
 }
 
-function listStatus({
+async function listStatus({
   host,
   email,
   apiToken,
+  project,
 }) {
   const client = getJiraClient({ host, email, apiToken });
 
-  return client.listStatus();
+  const statuses = await client.listStatus();
+  if (!project) {
+    return statuses;
+  }
+
+  const mappedStatuses = statuses.map((status) => ({
+    ...status,
+    isGlobal: !Reflect.has(status, "scope"),
+  }));
+
+  const filteredStatuses = mappedStatuses.filter((status) => (
+    status.isGlobal
+    || status.scope.project?.id === project
+  ));
+
+  return filteredStatuses;
 }
 
 module.exports = {

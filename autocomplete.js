@@ -41,7 +41,6 @@ async function searchIssues(query, params) {
   }
 
   const searchResults = await listIssues({ ...params, overrideJql: jql });
-
   return searchResults.issues.map(({ key, id }) => ({ value: key, id }));
 }
 
@@ -52,7 +51,12 @@ function getDateAutocomplete(query) {
 
 module.exports = {
   listProjectsAuto: mapListFunctionToAutocomplete(listProjects),
-  listStatusAuto: mapListFunctionToAutocomplete(listStatus),
+  listStatusAuto: mapListFunctionToAutocomplete(listStatus, {
+    mapper: ({ name, id, isGlobal }) => ({
+      id,
+      value: isGlobal ? `${name} (Global)` : name,
+    }),
+  }),
   listIssuesAuto: searchIssues,
   listIssueTypesAuto: mapListFunctionToAutocomplete(listIssueTypes),
   listTransitionsAuto: mapListFunctionToAutocomplete(listTransitions, { itemsPath: "transitions" }),
