@@ -8,6 +8,7 @@ const {
   listTransitions,
   listProjectVersions,
   listUsers,
+  listGroups,
 } = require("./jira-list-functions");
 
 const DEFAULT_ITEM_MAPPER = ({ name, id }) => ({ value: name, id });
@@ -17,7 +18,7 @@ const mapListFunctionToAutocomplete = (listFunction, {
   itemsPath,
 } = {}) => (
   async (query, params) => {
-    const listResult = await listFunction(params);
+    const listResult = await listFunction({ query, ...params });
     const items = itemsPath ? _.get(listResult, itemsPath) : listResult;
 
     const mappedAutocompleteItems = items.map(mapper);
@@ -62,5 +63,9 @@ module.exports = {
   listTransitionsAuto: mapListFunctionToAutocomplete(listTransitions, { itemsPath: "transitions" }),
   listVersionsAuto: mapListFunctionToAutocomplete(listProjectVersions),
   listUsersAuto: mapListFunctionToAutocomplete(listUsers),
+  listGroups: mapListFunctionToAutocomplete(listGroups, {
+    itemsPath: "groups",
+    mapper: ({ name, groupId }) => ({ value: name, id: groupId }),
+  }),
   getDate: getDateAutocomplete,
 };

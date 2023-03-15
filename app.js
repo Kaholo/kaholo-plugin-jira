@@ -117,6 +117,4 @@ module.exports = kaholoPluginLibrary.bootstrap({
   listProjects,
   listProjectVersions,
   listAssigneeDetails,
-}, {
-  ...autocomplete,
-});
+}, autocomplete);

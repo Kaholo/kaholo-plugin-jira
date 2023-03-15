@@ -421,9 +421,11 @@
       "viewName": "Get Assignee Details",
       "params": [
         {
-          "name": "group",
-          "viewName": "Group Name",
-          "type": "string",
+          "name": "groupId",
+          "viewName": "Group",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listGroups",
           "description": "Group Name of users.",
           "placeholder": "jira-users",
           "learnUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-groups/#api-rest-api-3-group-bulk-get"
