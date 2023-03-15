@@ -421,8 +421,8 @@
       "viewName": "Get Assignee Details",
       "params": [
         {
-          "name": "groupId",
-          "viewName": "Group",
+          "name": "group",
+          "viewName": "Group Name",
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listGroups",

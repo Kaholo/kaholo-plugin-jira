@@ -65,7 +65,7 @@ module.exports = {
   listUsersAuto: mapListFunctionToAutocomplete(listUsers),
   listGroups: mapListFunctionToAutocomplete(listGroups, {
     itemsPath: "groups",
-    mapper: ({ name, groupId }) => ({ value: name, id: groupId }),
+    mapper: ({ name }) => ({ value: name, id: name }),
   }),
   getDate: getDateAutocomplete,
 };
