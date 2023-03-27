@@ -139,8 +139,8 @@ async function listUsers({
 }) {
   const client = getJiraClient({ host, email, apiToken });
 
-  const usersResult = await (group ? client.getUsersInGroup(group) : client.getUsers());
-  return usersResult?.users?.items;
+  const result = await (group ? client.getUsersInGroup(group) : client.getUsers());
+  return group ? result.values : result;
 }
 
 async function listStatus({

@@ -20,10 +20,17 @@ const mapListFunctionToAutocomplete = (listFunction, {
   async (query, params) => {
     const listResult = await listFunction({ query, ...params });
     const items = itemsPath ? _.get(listResult, itemsPath) : listResult;
-
     const mappedAutocompleteItems = items.map(mapper);
 
-    return mappedAutocompleteItems.filter(({ value }) => value.toLowerCase().includes(query));
+    if (!query) {
+      return mappedAutocompleteItems;
+    }
+
+    const lowerCaseQuery = query.toLowerCase();
+    return mappedAutocompleteItems.filter(({ value, id }) => (
+      value.toLowerCase().includes(lowerCaseQuery)
+      || id.toLowerCase().includes(lowerCaseQuery)
+    ));
   }
 );
 
@@ -62,7 +69,9 @@ module.exports = {
   listIssueTypesAuto: mapListFunctionToAutocomplete(listIssueTypes),
   listTransitionsAuto: mapListFunctionToAutocomplete(listTransitions, { itemsPath: "transitions" }),
   listVersionsAuto: mapListFunctionToAutocomplete(listProjectVersions),
-  listUsersAuto: mapListFunctionToAutocomplete(listUsers),
+  listUsersAuto: mapListFunctionToAutocomplete(listUsers, {
+    mapper: ({ displayName, accountId }) => ({ value: displayName, id: accountId }),
+  }),
   listGroups: mapListFunctionToAutocomplete(listGroups, {
     itemsPath: "groups",
     mapper: ({ name }) => ({ value: name, id: name }),
