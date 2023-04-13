@@ -1,4 +1,5 @@
-const { getJiraClient, formatDate } = require("./helpers");
+const { default: axios } = require("axios");
+const { getJiraClient, formatDate, resolveHost } = require("./helpers");
 
 const DEFAULT_FIELDS = ["created", "description", "summary", "status", "priority"];
 const DEFAULT_MAX_RESULTS = 50;
@@ -76,12 +77,13 @@ function listAssigneeDetails({
     jqlSegments.push(`updated <= ${endDateFormatted}`);
   }
 
+  const jql = jqlSegments.join(" AND ");
   const searchOptions = { maxResults, startAt };
-  if (fields !== "*") {
+  if (fields && fields !== "*") {
     searchOptions.fields = fields;
   }
 
-  return jiraClient.searchJira(jqlSegments.join(" AND "), searchOptions);
+  return jiraClient.searchJira(jql, searchOptions);
 }
 
 function listTransitions({
@@ -91,7 +93,6 @@ function listTransitions({
   issue,
 }) {
   const jiraClient = getJiraClient({ host, email, apiToken });
-
   return jiraClient.listTransitions(issue);
 }
 
@@ -101,7 +102,6 @@ function listProjects({
   apiToken,
 }) {
   const jiraClient = getJiraClient({ host, email, apiToken });
-
   return jiraClient.listProjects();
 }
 
@@ -112,7 +112,6 @@ function listProjectVersions({
   project,
 }) {
   const jiraClient = getJiraClient({ host, email, apiToken });
-
   return jiraClient.getVersions(project);
 }
 
@@ -140,8 +139,8 @@ async function listUsers({
 }) {
   const client = getJiraClient({ host, email, apiToken });
 
-  const usersResult = await client.getUsersInGroup(group);
-  return usersResult?.users?.items;
+  const result = await (group ? client.getUsersInGroup(group) : client.getUsers());
+  return (group ? result.users.items : result) ?? [];
 }
 
 async function listStatus({
@@ -170,6 +169,39 @@ async function listStatus({
   return filteredStatuses;
 }
 
+async function listGroups(params) {
+  const {
+    host,
+    email,
+    apiToken,
+    query,
+  } = params;
+
+  const { host: resolvedHost, protocol } = resolveHost(host);
+  const fullBaseUrl = `${protocol}://${resolvedHost}`;
+
+  const urlParams = {};
+  if (query) {
+    urlParams.query = query;
+  }
+
+  const { data } = await axios({
+    method: "GET",
+    baseURL: fullBaseUrl,
+    url: "/rest/api/2/groups/picker",
+    auth: {
+      password: apiToken,
+      username: email,
+    },
+    headers: {
+      Accept: "application/json",
+    },
+    params: urlParams,
+  });
+
+  return data;
+}
+
 module.exports = {
   listIssues,
   listTransitions,
@@ -179,4 +211,5 @@ module.exports = {
   listIssueTypes,
   listUsers,
   listStatus,
+  listGroups,
 };

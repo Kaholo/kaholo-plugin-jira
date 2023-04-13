@@ -5,12 +5,7 @@ function getJiraClient({
   email,
   apiToken,
 }) {
-  const protocol = host.startsWith("http://") ? "http" : "https";
-
-  let correctedHost = host.replace(/^https?:\/\/|\/$/, "");
-  if (!correctedHost.includes(".")) {
-    correctedHost = `${correctedHost}.atlassian.net`;
-  }
+  const { host: correctedHost, protocol } = resolveHost(host);
 
   return new JiraClient({
     username: email,
@@ -22,9 +17,24 @@ function getJiraClient({
   });
 }
 
+function resolveHost(host) {
+  const protocol = host.startsWith("http://") ? "http" : "https";
+
+  let correctedHost = host.replace(/^https?:\/\/|\/$/, "");
+  if (!correctedHost.includes(".")) {
+    correctedHost = `${correctedHost}.atlassian.net`;
+  }
+  if (correctedHost.slice(-1) === "/") {
+    correctedHost = correctedHost.slice(0, -1);
+  }
+
+  return { host: correctedHost, protocol };
+}
+
 const formatDate = (dateString) => new Date(dateString).toISOString().split("T")[0];
 
 module.exports = {
   getJiraClient,
   formatDate,
+  resolveHost,
 };
