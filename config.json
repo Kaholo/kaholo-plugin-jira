@@ -54,6 +54,147 @@
   },
   "methods": [
     {
+      "name": "listIssues",
+      "viewName": "List Issues",
+      "params": [
+        {
+          "name": "project",
+          "viewName": "Project",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listProjectsAuto",
+          "description": "Project of issues to list",
+          "placeholder": "RnD",
+          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/"
+        },
+        {
+          "name": "status",
+          "viewName": "Status",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listStatusAuto",
+          "description": "Status of issues to list",
+          "placeholder": "Resolved",
+          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
+        },
+        {
+          "name": "startDate",
+          "viewName": "Created Since Date",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "getDate",
+          "description": "List only issues created on or after this date",
+          "placeholder": "2021-05-11",
+          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
+        },
+        {
+          "name": "endDate",
+          "viewName": "Created By Date",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "getDate",
+          "description": "List only issues created on or before this date",
+          "placeholder": "2021-04-11",
+          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
+        },
+        {
+          "name": "overrideJql",
+          "viewName": "Override JQL",
+          "type": "string",
+          "description": "Use to do an advanced search in the Jira Query Language (JQL).",
+          "placeholder": "status IN (\"To Do\", \"In Progress\", \"Closed\")",
+          "learnUrl": "https://www.atlassian.com/software/jira/guides/expand-jira/jql#advanced-search"
+        },
+        {
+          "name": "fields",
+          "viewName": "Fields",
+          "type": "text",
+          "description": "List of specific fields to return for found issues",
+          "placeholder": "description\nstatus\npriority",
+          "learnUrl": "https://confluence.atlassian.com/adminjiraserver/adding-a-custom-field-938847222.html",
+          "parserType": "array"
+        },
+        {
+          "name": "maxResults",
+          "viewName": "Max Results",
+          "type": "int",
+          "description": "Maximum number of results to show with one search action",
+          "learnUrl": "https://confluence.atlassian.com/jiracoreserver085/working-with-search-results-981157534.html",
+          "default": 50
+        },
+        {
+          "name": "startAt",
+          "viewName": "Results Offset",
+          "type": "int",
+          "description": "Return only results appearing after this number of skipped results",
+          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-functions/",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "name": "createIssue",
+      "viewName": "Create Issue",
+      "params": [
+        {
+          "name": "project",
+          "viewName": "Project",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listProjectsAuto",
+          "description": "Project of the issue to create",
+          "placeholder": "RnD",
+          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/",
+          "required": true
+        },
+        {
+          "name": "issueType",
+          "viewName": "Issue Type",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listIssueTypesAuto",
+          "description": "Type of issue to create",
+          "placeholder": "Bug",
+          "learnUrl": "https://community.atlassian.com/t5/Jira-articles/Understanding-issue-types-in-jira/ba-p/1497237",
+          "required": true
+        },
+        {
+          "name": "summary",
+          "viewName": "Summary",
+          "type": "string",
+          "description": "Summary of the new issue",
+          "placeholder": "Defect in hyperscaler synchronizer",
+          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-types/",
+          "required": true
+        },
+        {
+          "name": "description",
+          "viewName": "Description",
+          "type": "text",
+          "description": "Description of the new issue",
+          "placeholder": "When hyperscaling features are enabled with single-node configuration...",
+          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-types/"
+        }
+      ]
+    },
+    {
+      "name": "listTransitions",
+      "viewName": "List Transitions",
+      "params": [
+        {
+          "name": "issue",
+          "viewName": "Issue",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listIssuesAuto",
+          "description": "Issue for which to list transitions",
+          "placeholder": "RND-1234",
+          "learnUrl": "https://confluence.atlassian.com/jirasoftwareserver/editing-and-collaborating-on-issues-939938928.html",
+          "required": true
+        }
+      ]
+    },
+    {
       "name": "transitionIssue",
       "viewName": "Transition Issue Status",
       "params": [
@@ -87,6 +228,54 @@
           "description": "The status to which the issue will be transitioned",
           "placeholder": "Resolved",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "addIssueComment",
+      "viewName": "Add Comment To Issue",
+      "params": [
+        {
+          "name": "issue",
+          "viewName": "Issue",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listIssuesAuto",
+          "description": "Issue on which to comment",
+          "placeholder": "RND-1234",
+          "learnUrl": "https://confluence.atlassian.com/jirasoftwareserver/editing-and-collaborating-on-issues-939938928.html",
+          "required": true
+        },
+        {
+          "name": "comment",
+          "viewName": "Comment",
+          "type": "text",
+          "description": "Comment to add to issue",
+          "placeholder": "This issue will be deferred until version 2.x",
+          "learnUrl": "https://confluence.atlassian.com/jirasoftwareserver/editing-and-collaborating-on-issues-939938928.html",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "listProjects",
+      "viewName": "List Projects",
+      "params": []
+    },
+    {
+      "name": "listProjectVersions",
+      "viewName": "List Project Versions",
+      "params": [
+        {
+          "name": "project",
+          "viewName": "Project",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listProjectsAuto",
+          "description": "Project in which to list versions",
+          "placeholder": "RnD",
+          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/",
           "required": true
         }
       ]
@@ -224,195 +413,6 @@
           "type": "boolean",
           "description": "Archive the version.",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
-        }
-      ]
-    },
-    {
-      "name": "createIssue",
-      "viewName": "Create Issue",
-      "params": [
-        {
-          "name": "project",
-          "viewName": "Project",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "listProjectsAuto",
-          "description": "Project of the issue to create",
-          "placeholder": "RnD",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/",
-          "required": true
-        },
-        {
-          "name": "issueType",
-          "viewName": "Issue Type",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "listIssueTypesAuto",
-          "description": "Type of issue to create",
-          "placeholder": "Bug",
-          "learnUrl": "https://community.atlassian.com/t5/Jira-articles/Understanding-issue-types-in-jira/ba-p/1497237",
-          "required": true
-        },
-        {
-          "name": "summary",
-          "viewName": "Summary",
-          "type": "string",
-          "description": "Summary of the new issue",
-          "placeholder": "Defect in hyperscaler synchronizer",
-          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-types/",
-          "required": true
-        },
-        {
-          "name": "description",
-          "viewName": "Description",
-          "type": "text",
-          "description": "Description of the new issue",
-          "placeholder": "When hyperscaling features are enabled with single-node configuration...",
-          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-types/"
-        }
-      ]
-    },
-    {
-      "name": "addIssueComment",
-      "viewName": "Add Comment To Issue",
-      "params": [
-        {
-          "name": "issue",
-          "viewName": "Issue",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "listIssuesAuto",
-          "description": "Issue on which to comment",
-          "placeholder": "RND-1234",
-          "learnUrl": "https://confluence.atlassian.com/jirasoftwareserver/editing-and-collaborating-on-issues-939938928.html",
-          "required": true
-        },
-        {
-          "name": "comment",
-          "viewName": "Comment",
-          "type": "text",
-          "description": "Comment to add to issue",
-          "placeholder": "This issue will be deferred until version 2.x",
-          "learnUrl": "https://confluence.atlassian.com/jirasoftwareserver/editing-and-collaborating-on-issues-939938928.html",
-          "required": true
-        }
-      ]
-    },
-    {
-      "name": "listIssues",
-      "viewName": "List Issues",
-      "params": [
-        {
-          "name": "project",
-          "viewName": "Project",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "listProjectsAuto",
-          "description": "Project of issues to list",
-          "placeholder": "RnD",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/"
-        },
-        {
-          "name": "status",
-          "viewName": "Status",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "listStatusAuto",
-          "description": "Status of issues to list",
-          "placeholder": "Resolved",
-          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
-        },
-        {
-          "name": "startDate",
-          "viewName": "Created Since Date",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "getDate",
-          "description": "List only issues created on or after this date",
-          "placeholder": "2021-05-11",
-          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
-        },
-        {
-          "name": "endDate",
-          "viewName": "Created By Date",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "getDate",
-          "description": "List only issues created on or before this date",
-          "placeholder": "2021-04-11",
-          "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
-        },
-        {
-          "name": "overrideJql",
-          "viewName": "Override JQL",
-          "type": "string",
-          "description": "Use to do an advanced search in the Jira Query Language (JQL).",
-          "placeholder": "status IN (\"To Do\", \"In Progress\", \"Closed\")",
-          "learnUrl": "https://www.atlassian.com/software/jira/guides/expand-jira/jql#advanced-search"
-        },
-        {
-          "name": "fields",
-          "viewName": "Fields",
-          "type": "text",
-          "description": "List of specific fields to return for found issues",
-          "placeholder": "description\nstatus\npriority",
-          "learnUrl": "https://confluence.atlassian.com/adminjiraserver/adding-a-custom-field-938847222.html",
-          "parserType": "array"
-        },
-        {
-          "name": "maxResults",
-          "viewName": "Max Results",
-          "type": "int",
-          "description": "Maximum number of results to show with one search action",
-          "learnUrl": "https://confluence.atlassian.com/jiracoreserver085/working-with-search-results-981157534.html",
-          "default": 50
-        },
-        {
-          "name": "startAt",
-          "viewName": "Results Offset",
-          "type": "int",
-          "description": "Return only results appearing after this number of skipped results",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-functions/",
-          "default": 0
-        }
-      ]
-    },
-    {
-      "name": "listTransitions",
-      "viewName": "List Transitions",
-      "params": [
-        {
-          "name": "issue",
-          "viewName": "Issue",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "listIssuesAuto",
-          "description": "Issue for which to list transitions",
-          "placeholder": "RND-1234",
-          "learnUrl": "https://confluence.atlassian.com/jirasoftwareserver/editing-and-collaborating-on-issues-939938928.html",
-          "required": true
-        }
-      ]
-    },
-    {
-      "name": "listProjects",
-      "viewName": "List Projects",
-      "params": []
-    },
-    {
-      "name": "listProjectVersions",
-      "viewName": "List Project Versions",
-      "params": [
-        {
-          "name": "project",
-          "viewName": "Project",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "listProjectsAuto",
-          "description": "Project in which to list versions",
-          "placeholder": "RnD",
-          "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/",
-          "required": true
         }
       ]
     },
