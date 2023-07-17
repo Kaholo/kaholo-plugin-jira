@@ -5,18 +5,22 @@
   "execProgram": "node",
   "main": "app.js",
   "version": "3.0.1",
-  "description": "Kaholo plugin for integration with Jira API",
+  "description": "Atlassian Jira - Agile project and issue tracking",
   "category": "Issue Tracking",
   "keywords": [
-    "ticket",
-    "card",
-    "troubleticket",
-    "malfunction",
-    "incident",
-    "notification",
-    "Atlassian",
+    "atlassian",
+    "jira",
     "sprint",
-    "alert"
+    "alert",
+    "bug",
+    "issue",
+    "scrum",
+    "agile",
+    "task",
+    "tracking",
+    "project",
+    "kanban",
+    "backlog"
   ],
   "auth": {
     "authId": "jiraAccount",
@@ -25,23 +29,23 @@
         "name": "host",
         "viewName": "Jira Server URL",
         "type": "string",
-        "description": "Your JIRA login URL.",
-        "placeholder": "https://google.atlassian.net/",
+        "description": "JIRA login URL",
+        "placeholder": "https://mycompany.atlassian.net/",
         "learnUrl": "https://support.atlassian.com/jira-software-cloud/resources/"
       },
       {
         "name": "email",
         "viewName": "Email",
         "type": "string",
-        "description": "User email for accessibility.",
-        "placeholder": "user@domain.com",
+        "description": "User email to use for authentication",
+        "placeholder": "me@mycompany.com",
         "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-team-managed-project/"
       },
       {
         "name": "apiToken",
         "viewName": "API Token",
         "type": "vault",
-        "description": "API token for the user to be able to authenticate and connect.",
+        "description": "API token to use for authentication",
         "placeholder": "cqCT6iPgEeBoHwCPxHwXDA86",
         "learnUrl": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
       }
@@ -58,7 +62,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listProjectsAuto",
-          "description": "Transition only from a specified project.",
+          "description": "Project of the issue to be transitioned",
           "placeholder": "RnD",
           "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/"
         },
@@ -68,7 +72,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listIssuesAuto",
-          "description": "Make the transition on the specified issue.",
+          "description": "The issue to transition",
           "placeholder": "RND-1234",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/work-with-issue-workflows/",
           "required": true
@@ -79,7 +83,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listTransitionsAuto",
-          "description": "The transition status to change the issue to.",
+          "description": "The status to which the issue will be transitioned",
           "placeholder": "Resolved",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/",
           "required": true
@@ -96,7 +100,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listProjectsAuto",
-          "description": "Transition only from a specified project.",
+          "description": "Project in which to create a version",
           "placeholder": "RnD",
           "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/"
         },
@@ -104,7 +108,7 @@
           "name": "versionName",
           "viewName": "Version Name",
           "type": "string",
-          "description": "Name the created version.",
+          "description": "Name of the version to create",
           "placeholder": "version 2.0",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
@@ -112,7 +116,7 @@
           "name": "description",
           "viewName": "Description",
           "type": "text",
-          "description": "Provide a description for the created version.",
+          "description": "Description for the created version.",
           "placeholder": "This is the version we use.",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
@@ -122,8 +126,8 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "getDate",
-          "description": "Provide the start date of the created version.",
-          "placeholder": "2021-05-12",
+          "description": "Start date for the created version",
+          "placeholder": "2024-05-12",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
         {
@@ -132,16 +136,15 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "getDate",
-          "description": "Provide the release date of the created version.",
-          "placeholder": "2021-01-12",
+          "description": "Release date for the created version",
+          "placeholder": "2025-02-23",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
         {
           "name": "archived",
           "viewName": "Archived",
           "type": "boolean",
-          "description": "Indicates if the version is archived.",
-          "placeholder": "true/false",
+          "description": "Set status to archived, hiding version from reports and other parts of project.",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         }
       ]
@@ -156,7 +159,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listProjectsAuto",
-          "description": "Transition only from a specified project.",
+          "description": "Project of verison to update",
           "placeholder": "RnD",
           "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/"
         },
@@ -166,7 +169,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listVersionsAuto",
-          "description": "Name the created version.",
+          "description": "Version to be updated",
           "placeholder": "version 2.0",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions",
           "required": true
@@ -175,8 +178,8 @@
           "name": "description",
           "viewName": "Description",
           "type": "text",
-          "description": "Provide a description for the created version.",
-          "placeholder": "This is the version we use.",
+          "description": "A new description for the version, leave empty for no change",
+          "placeholder": "This version introduces the hyperscaling features",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
         {
@@ -185,7 +188,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "getDate",
-          "description": "Provide the start date of the created version.",
+          "description": "A new start date for the version, leave unconfigured for no change",
           "placeholder": "2021-05-11",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
@@ -195,7 +198,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "getDate",
-          "description": "Provide the release date of the created version.",
+          "description": "A new release date for the version, leave unconfigured for no change",
           "placeholder": "2021-01-12",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
@@ -203,7 +206,7 @@
           "name": "moveUrl",
           "viewName": "Move Unfixed Issues URL",
           "type": "string",
-          "description": "URL to the unfixed issues when a new version is released.",
+          "description": "Self-link URL to a version where unfixed issues will be moved upon release",
           "placeholder": "other.jira.net",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
@@ -211,8 +214,7 @@
           "name": "released",
           "viewName": "Released",
           "type": "boolean",
-          "description": "Release the version.",
-          "placeholder": "true/false",
+          "description": "Release the version",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
         {
@@ -220,7 +222,6 @@
           "viewName": "Archived",
           "type": "boolean",
           "description": "Archive the version.",
-          "placeholder": "true/false",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         }
       ]
@@ -235,7 +236,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listProjectsAuto",
-          "description": "Transition only from a specified project.",
+          "description": "Project of the issue to create",
           "placeholder": "RnD",
           "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/",
           "required": true
@@ -246,7 +247,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listIssueTypesAuto",
-          "description": "Type of issue to create.",
+          "description": "Type of issue to create",
           "placeholder": "Bug",
           "learnUrl": "https://community.atlassian.com/t5/Jira-articles/Understanding-issue-types-in-jira/ba-p/1497237",
           "required": true
@@ -255,8 +256,8 @@
           "name": "summary",
           "viewName": "Summary",
           "type": "string",
-          "description": "Summary of the new issue.",
-          "placeholder": "This is a bug in the system.",
+          "description": "Summary of the new issue",
+          "placeholder": "Defect in hyperscaler synchronizer",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-types/",
           "required": true
         },
@@ -264,8 +265,8 @@
           "name": "description",
           "viewName": "Description",
           "type": "text",
-          "description": "Description of the new issue.",
-          "placeholder": "This is a bug in the system.",
+          "description": "Description of the new issue",
+          "placeholder": "When hyperscaling features are enabled with single-node configuration...",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-types/"
         }
       ]
@@ -280,7 +281,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listIssuesAuto",
-          "description": "Issue to comment on.",
+          "description": "Issue on which to comment",
           "placeholder": "RND-1234",
           "learnUrl": "https://confluence.atlassian.com/jirasoftwareserver/editing-and-collaborating-on-issues-939938928.html",
           "required": true
@@ -289,8 +290,8 @@
           "name": "comment",
           "viewName": "Comment",
           "type": "text",
-          "description": "Comment to the issue.",
-          "placeholder": "This is a comment on the issue.",
+          "description": "Comment to add to issue",
+          "placeholder": "This issue will be deferred until version 2.x",
           "learnUrl": "https://confluence.atlassian.com/jirasoftwareserver/editing-and-collaborating-on-issues-939938928.html",
           "required": true
         }
@@ -306,7 +307,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listProjectsAuto",
-          "description": "List issues only from the specified project name.",
+          "description": "Project of issues to list",
           "placeholder": "RnD",
           "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/"
         },
@@ -316,27 +317,27 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listStatusAuto",
-          "description": "List issues only with the specified status.",
+          "description": "Status of issues to list",
           "placeholder": "Resolved",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },
         {
           "name": "startDate",
-          "viewName": "Created After Date",
+          "viewName": "Created Since Date",
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "getDate",
-          "description": "List only those created after a mentioned date.",
+          "description": "List only issues created on or after this date",
           "placeholder": "2021-05-11",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },
         {
           "name": "endDate",
-          "viewName": "Created Before Date",
+          "viewName": "Created By Date",
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "getDate",
-          "description": "List only those created before a mentioned date.",
+          "description": "List only issues created on or before this date",
           "placeholder": "2021-04-11",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },
@@ -344,16 +345,16 @@
           "name": "overrideJql",
           "viewName": "Override JQL",
           "type": "string",
-          "description": "Advanced search which allows to build structured queries using the Jira Query Language (JQL) to search for issues. You can specify criteria that cannot be defined in the quick or basic searches.",
-          "placeholder": "ORDER BY clause",
+          "description": "Use to do an advanced search in the Jira Query Language (JQL).",
+          "placeholder": "status IN (\"To Do\", \"In Progress\", \"Closed\")",
           "learnUrl": "https://www.atlassian.com/software/jira/guides/expand-jira/jql#advanced-search"
         },
         {
           "name": "fields",
           "viewName": "Fields",
           "type": "text",
-          "description": "List only specific fields.",
-          "placeholder": "priority",
+          "description": "List of specific fields to return for found issues",
+          "placeholder": "description\nstatus\npriority",
           "learnUrl": "https://confluence.atlassian.com/adminjiraserver/adding-a-custom-field-938847222.html",
           "parserType": "array"
         },
@@ -361,8 +362,7 @@
           "name": "maxResults",
           "viewName": "Max Results",
           "type": "int",
-          "description": "Maximum number of results to show.",
-          "placeholder": 50,
+          "description": "Maximum number of results to show with one search action",
           "learnUrl": "https://confluence.atlassian.com/jiracoreserver085/working-with-search-results-981157534.html",
           "default": 50
         },
@@ -370,8 +370,7 @@
           "name": "startAt",
           "viewName": "Results Offset",
           "type": "int",
-          "description": "Return results from a specified offset index.",
-          "placeholder": "issueHistory()",
+          "description": "Return only results appearing after this number of skipped results",
           "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-functions/",
           "default": 0
         }
@@ -387,7 +386,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listIssuesAuto",
-          "description": "Issue to list its transitions.",
+          "description": "Issue for which to list transitions",
           "placeholder": "RND-1234",
           "learnUrl": "https://confluence.atlassian.com/jirasoftwareserver/editing-and-collaborating-on-issues-939938928.html",
           "required": true
@@ -409,7 +408,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listProjectsAuto",
-          "description": "List this project versions.",
+          "description": "Project in which to list versions",
           "placeholder": "RnD",
           "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/what-is-a-jira-software-project/",
           "required": true
@@ -426,7 +425,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listGroups",
-          "description": "Group Name of users.",
+          "description": "Group Name of assignee",
           "placeholder": "jira-users",
           "learnUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-groups/#api-rest-api-3-group-bulk-get"
         },
@@ -436,7 +435,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listUsersAuto",
-          "description": "Show Users",
+          "description": "Username of assignee",
           "placeholder": "Users",
           "learnUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-groups/#api-rest-api-3-group-bulk-get"
         },
@@ -446,8 +445,8 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "getDate",
-          "description": "List only those created after a mentioned date.",
-          "placeholder": "2022-01-01",
+          "description": "List details only of issues created on or after this date.",
+          "placeholder": "2023-01-01",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },
         {
@@ -456,7 +455,7 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "getDate",
-          "description": "List only those created before a mentioned date.",
+          "description": "List details only of issues created by this date.",
           "placeholder": "2022-31-12",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },
@@ -464,8 +463,8 @@
           "name": "fields",
           "viewName": "Fields",
           "type": "text",
-          "description": "List only specific fields.",
-          "placeholder": "priority",
+          "description": "List of specific fields to return for found issues",
+          "placeholder": "description\nstatus\npriority",
           "learnUrl": "https://confluence.atlassian.com/adminjiraserver/adding-a-custom-field-938847222.html",
           "parserType": "array"
         },
@@ -473,8 +472,7 @@
           "name": "maxResults",
           "viewName": "Max Results",
           "type": "int",
-          "description": "Maximum number of results to show.",
-          "placeholder": 50,
+          "description": "Maximum number of results to show",
           "learnUrl": "https://confluence.atlassian.com/jiracoreserver085/working-with-search-results-981157534.html",
           "default": 50
         },
@@ -482,8 +480,7 @@
           "name": "startAt",
           "viewName": "Results Offset",
           "type": "int",
-          "description": "Return results from a specified offset index.",
-          "placeholder": "issueHistory()",
+          "description": "Return only results appearing after this number of skipped results",
           "learnUrl": "https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-functions/",
           "default": 0
         }
