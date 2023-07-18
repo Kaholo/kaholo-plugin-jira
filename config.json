@@ -5,7 +5,7 @@
   "imgUrl": "logo.png",
   "execProgram": "node",
   "main": "app.js",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Atlassian Jira - Agile project and issue tracking",
   "category": "Issue Tracking",
   "keywords": [
