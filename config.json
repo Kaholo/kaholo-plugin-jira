@@ -432,7 +432,7 @@
         },
         {
           "name": "users",
-          "viewName": "Users",
+          "viewName": "User",
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listUsersAuto",
@@ -442,7 +442,7 @@
         },
         {
           "name": "startDate",
-          "viewName": "Created After Date",
+          "viewName": "Created Since Date",
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "getDate",
@@ -452,7 +452,7 @@
         },
         {
           "name": "endDate",
-          "viewName": "Created Before Date",
+          "viewName": "Created By Date",
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "getDate",
