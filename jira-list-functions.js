@@ -69,12 +69,10 @@ function listAssigneeDetails({
     jqlSegments.push(`assignee in ('${assignee}')`);
   }
   if (!customJqlString && startDate) {
-    const startDateFormatted = formatDate(startDate);
-    jqlSegments.push(`updated >= ${startDateFormatted}`);
+    jqlSegments.push(`created >= ${startDate}`);
   }
   if (!customJqlString && endDate) {
-    const endDateFormatted = formatDate(endDate);
-    jqlSegments.push(`updated <= ${endDateFormatted}`);
+    jqlSegments.push(`created <= ${endDate}`);
   }
 
   const jql = jqlSegments.join(" AND ");
