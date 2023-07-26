@@ -1,5 +1,4 @@
 const _ = require("lodash");
-const { formatDate } = require("./helpers");
 const {
   listProjects,
   listStatus,
@@ -52,11 +51,6 @@ async function searchIssues(query, params) {
   return searchResults.issues.map(({ key, id }) => ({ value: key, id }));
 }
 
-function getDateAutocomplete(query) {
-  const queryTime = formatDate(query || Date.now());
-  return [{ id: queryTime, value: queryTime }];
-}
-
 module.exports = {
   listProjectsAuto: mapListFunctionToAutocomplete(listProjects),
   listStatusAuto: mapListFunctionToAutocomplete(listStatus, {
@@ -76,5 +70,4 @@ module.exports = {
     itemsPath: "groups",
     mapper: ({ name }) => ({ value: name, id: name }),
   }),
-  getDate: getDateAutocomplete,
 };
