@@ -80,20 +80,16 @@
         {
           "name": "startDate",
           "viewName": "Created Since Date",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "getDate",
-          "description": "List only issues created on or after this date",
+          "type": "string",
+          "description": "List only issues created on or after this date. Enter the date in \"YYYY-MM-DD\" format.",
           "placeholder": "2021-05-11",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },
         {
           "name": "endDate",
           "viewName": "Created By Date",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "getDate",
-          "description": "List only issues created on or before this date",
+          "type": "string",
+          "description": "List only issues created on or before this date. Enter the date in \"YYYY-MM-DD\" format.",
           "placeholder": "2021-04-11",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },
@@ -313,20 +309,16 @@
         {
           "name": "startDate",
           "viewName": "Start Date",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "getDate",
-          "description": "Start date for the created version",
+          "type": "string",
+          "description": "Start date for the created version. Enter the date in \"YYYY-MM-DD\" format.",
           "placeholder": "2024-05-12",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
         {
           "name": "endDate",
           "viewName": "Release Date",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "getDate",
-          "description": "Release date for the created version",
+          "type": "string",
+          "description": "Release date for the created version. Enter the date in \"YYYY-MM-DD\" format.",
           "placeholder": "2025-02-23",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
@@ -375,20 +367,16 @@
         {
           "name": "startDate",
           "viewName": "Start Date",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "getDate",
-          "description": "A new start date for the version, leave unconfigured for no change",
+          "type": "string",
+          "description": "A new start date for the version, leave unconfigured for no change. Enter the date in \"YYYY-MM-DD\" format.",
           "placeholder": "2021-05-11",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
         {
           "name": "endDate",
           "viewName": "Release Date",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "getDate",
-          "description": "A new release date for the version, leave unconfigured for no change",
+          "type": "string",
+          "description": "A new release date for the version, leave unconfigured for no change. Enter the date in \"YYYY-MM-DD\" format.",
           "placeholder": "2021-01-12",
           "learnUrl": "https://www.atlassian.com/agile/tutorials/versions"
         },
@@ -443,20 +431,16 @@
         {
           "name": "startDate",
           "viewName": "Created Since Date",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "getDate",
-          "description": "List details only of issues created on or after this date.",
+          "type": "string",
+          "description": "List details only of issues created on or after this date. Enter the date in \"YYYY-MM-DD\" format.",
           "placeholder": "2023-01-01",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },
         {
           "name": "endDate",
           "viewName": "Created By Date",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "getDate",
-          "description": "List details only of issues created by this date.",
+          "type": "string",
+          "description": "List details only of issues created by this date. Enter the date in \"YYYY-MM-DD\" format.",
           "placeholder": "2022-31-12",
           "learnUrl": "https://support.atlassian.com/jira-cloud-administration/docs/what-are-issue-statuses-priorities-and-resolutions/"
         },

@@ -31,10 +31,7 @@ function resolveHost(host) {
   return { host: correctedHost, protocol };
 }
 
-const formatDate = (dateString) => new Date(dateString).toISOString().split("T")[0];
-
 module.exports = {
   getJiraClient,
-  formatDate,
   resolveHost,
 };

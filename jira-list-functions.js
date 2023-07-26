@@ -1,5 +1,5 @@
 const { default: axios } = require("axios");
-const { getJiraClient, formatDate, resolveHost } = require("./helpers");
+const { getJiraClient, resolveHost } = require("./helpers");
 
 const DEFAULT_FIELDS = ["created", "description", "summary", "status", "priority"];
 const DEFAULT_MAX_RESULTS = 50;
@@ -31,12 +31,10 @@ function listIssues({
     jqlSegments.push(`status = ${status}`);
   }
   if (!customJqlString && startDate) {
-    const startDateFormatted = formatDate(startDate);
-    jqlSegments.push(`updated >= ${startDateFormatted}`);
+    jqlSegments.push(`updated >= ${startDate}`);
   }
   if (!customJqlString && endDate) {
-    const endDateFormatted = formatDate(endDate);
-    jqlSegments.push(`updated <= ${endDateFormatted}`);
+    jqlSegments.push(`updated <= ${endDate}`);
   }
 
   const searchOptions = { maxResults, startAt };
